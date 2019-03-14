@@ -22,14 +22,14 @@ namespace Galaga_Exercise_2 {
 
         public Game() {
             // Add reasonable values
-            win = new Window("Galaga",500, 500);
-            gameTimer = new GameTimer(40,40);
-            player = new Player(this, 
-            new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-            new Image(Path.Combine("Assets", "Images", "Player.png")));
+            win = new Window("Galaga", 500, 500);
+            gameTimer = new GameTimer(40, 40);
+            player = new Player(this,
+                new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                new Image(Path.Combine("Assets", "Images", "Player.png")));
             eventBus = new GameEventBus<object>();
             eventBus.InitializeEventBus(new List<GameEventType>() {
-                GameEventType.InputEvent, 
+                GameEventType.InputEvent,
                 GameEventType.WindowEvent,
             });
             win.RegisterEventBus(eventBus);
@@ -63,7 +63,7 @@ namespace Galaga_Exercise_2 {
                 new DynamicShape(new Vec2F(0.5f, 0.9f), new Vec2F(0.1f, 0.1f)),
                 new ImageStride(80, enemyStrides)));
         }
-        
+
 
         public void GameLoop() {
             AddEnemies();
@@ -82,10 +82,11 @@ namespace Galaga_Exercise_2 {
                     player.RenderEntity();
                     foreach (Enemy enemy in enemies) {
                         enemy.RenderEntity();
-                        
+
                     }
+
                     win.SwapBuffers();
-                    
+
                 }
 
                 if (gameTimer.ShouldReset()) {
@@ -103,42 +104,44 @@ namespace Galaga_Exercise_2 {
                     shot.DeleteEntity();
                 }
 
-                foreach (var enemy in enemies) {
-                    
-                    
-                }
-                
+                foreach (var enemy in enemies) { }
+
             }
         }
 
 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
-                switch (gameEvent.Message) {
-                case "CLOSUE_WINDOW":
-                    win.CloseWindow();
-                    break;
-                default:
-                    break;
-                        
-                }
+                switch (eventType) {
+                case GameEventType.WindowEvent:
+                    switch (gameEvent.Message) {
+                    case "CLOSUE_WINDOW":
+                        win.CloseWindow();
+                        break;
+                    }
 
-         
-            }
-            else if (eventType == GameEventType.InputEvent) {
-                switch (gameEvent.Parameter1) {
-                case "KEY_PRESS":
-                    KeyPress(gameEvent.Message);
                     break;
-                case "KEY_RELEASE":
-                    KeyRelease(gameEvent.Message);
+
+                case GameEventType.PlayerEvent:
+
+
+
+                case GameEventType.InputEvent:
+                    switch (gameEvent.Parameter1) {
+                    case "KEY_PRESS":
+                        KeyPress(gameEvent.Message);
+                        break;
+                    case "KEY_RELEASE":
+                        KeyRelease(gameEvent.Message);
+                        break;
+                    }
+
                     break;
                 }
             }
         }
     }
- 
-    }
+
 }  
     
 
