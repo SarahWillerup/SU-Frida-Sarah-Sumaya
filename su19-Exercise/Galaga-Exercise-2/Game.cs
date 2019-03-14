@@ -112,8 +112,6 @@ namespace Galaga_Exercise_2 {
 
             }
         }
-
-
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
                 switch (eventType) {
@@ -144,6 +142,7 @@ namespace Galaga_Exercise_2 {
                 }
             }
         }
+
     }
 
 }  
