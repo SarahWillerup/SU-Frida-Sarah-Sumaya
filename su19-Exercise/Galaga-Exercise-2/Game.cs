@@ -32,9 +32,7 @@ namespace Galaga_Exercise_2 {
                 GameEventType.InputEvent,
                 GameEventType.WindowEvent,
             });
-            eventBus.RegisterEvent(
-                GameEventFactory<object>.CreateGameEventForAllProcessors(
-                    GameEventType.PlayerEvent, this, "ATTACK", "SWORD", "5"));
+           
 
             win.RegisterEventBus(eventBus);
             eventBus.Subscribe(GameEventType.InputEvent, this);
@@ -125,6 +123,8 @@ namespace Galaga_Exercise_2 {
                     break;
 
                 case GameEventType.PlayerEvent:
+                    player.ProcessEvent( eventType,  gameEvent);
+                    break;
                     
 
 
