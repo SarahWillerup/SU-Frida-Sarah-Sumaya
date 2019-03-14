@@ -25,7 +25,7 @@ namespace Galaga_Exercise_2 {
             });
             eventBus.RegisterEvent(
                 GameEventFactory<object>.CreateGameEventForAllProcessors(
-                    GameEventType.PlayerEvent, this, "ATTACK", "SWORD", "5"));
+                    GameEventType.Event, this, "ATTACK", "SWORD", "5"));
 
         }
 
@@ -34,15 +34,15 @@ namespace Galaga_Exercise_2 {
         }
 
         public void Move() {
-            if (Entity.Shape.Position.X >= 0 && Entity.Shape.Position.X <=
-                1 - Entity.Shape.Extent.X + Entity.Shape.AsDynamicShape().Direction.X) {
+            Vec2F newPos = Entity.Shape.Position + Entity.Shape.AsDynamicShape().Direction;
+            if (newPos.X > 0||1 < newPos.X)
                 Entity.Shape.Move();
-            }
+
         }
 
-        public void AddPlayerShot() {
-            game.PlayerShots.Add(new PlayerShot(game,
-                new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.008f, 0.027f)),
+        public void PlayerShotAdded() {
+            game.playershots.Add(new PlayerShot(game,
+                new DynamicShape(new Vec2F(Entity.Shape.Position.X + Entity.Shape.Extent.X / 2, Entity.Shape.Position.Y + Entity.Shape.Extent.Y), new Vec2F(0.008f, 0.027f)),
                 game.PlayerShot));
         }
 
@@ -54,10 +54,15 @@ namespace Galaga_Exercise_2 {
                         GameEventType.WindowEvent, this, "CLOSE_WINDOW", "", ""));
                 break;
             case "KEY_LEFT":
-                Direction(new Vec2F(0.01f, 0.0f));
+                Direction(new Vec2F(-0.01f, 0.0f));
                 break;
             case "KEY_RIGHT":
                 Direction(new Vec2F(0.01f, 0.0f));
+                break;
+            case "KEY_SPACE":
+                PlayerShotAdded();
+                break;
+            default:
                 break;
             }
         }
@@ -65,12 +70,12 @@ namespace Galaga_Exercise_2 {
         public void KeyRelease(string key) {
             switch (key) {
             case "KEY_LEFT":
-                Direction(new Vec2F(0.00f, 0.00f));
+                Direction(new Vec2F(0.0f, 0.00f));
                 break;
             case "KEY_RIGHT":
-                Direction(new Vec2F(0.00f, 0.00f));
+                Direction(new Vec2F(0.0f, 0.00f));
                 break;
-            case "SPACE":
+            default:
                 break;
             }
         }

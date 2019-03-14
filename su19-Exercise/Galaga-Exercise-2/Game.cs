@@ -7,6 +7,7 @@ using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Timers;
+using DIKUArcade.Physics;
 
 namespace Galaga_Exercise_2 {
     public class Game : IGameEventProcessor<object> {
@@ -16,8 +17,13 @@ namespace Galaga_Exercise_2 {
         private GameEventBus<object> eventBus;
         public List<Image> enemyStrides;
         public List<Enemy> enemies;
-        public List<PlayerShot> PlayerShots;
+        public List<PlayerShot> playershots { get; private set; }
         public Image PlayerShot;
+        private List<Image> explosionStrides;
+        private AnimationContainer explosions;
+        private int explosionLength = 500;
+        private Score score;
+        public List<PlayerShot> PlayerShots;
         private IGameEventProcessor<object> gameEventProcessorImplementation;
 
         public Game() {
@@ -42,10 +48,19 @@ namespace Galaga_Exercise_2 {
             enemyStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             enemies = new List<Enemy>();
+            AddEnemies();
 
             PlayerShot = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
             PlayerShots = new List<PlayerShot>();
 
+            explosionStrides =
+                ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "Explosion.png"));
+
+            score =  new Score(new Vec2F(0.05f,0.04f),new Vec2F(0.5f,0.5f));
+            
+            explosionStrides =
+                ImageStride.CreateStrides(8, Path.Combine("Assets", "Images", "Explosion.png"));
+            explosions = new AnimationContainer(10);
         }
 
         public void AddEnemies() {
@@ -64,8 +79,54 @@ namespace Galaga_Exercise_2 {
             enemies.Add(new Enemy(this,
                 new DynamicShape(new Vec2F(0.5f, 0.9f), new Vec2F(0.1f, 0.1f)),
                 new ImageStride(80, enemyStrides)));
+            enemies.Add(new Enemy(this,
+                new DynamicShape(new Vec2F(0.6f, 0.9f), new Vec2F(0.1f, 0.1f)),
+                new ImageStride(80, enemyStrides)));
+            enemies.Add(new Enemy(this,
+                new DynamicShape(new Vec2F(0.7f, 0.9f), new Vec2F(0.1f, 0.1f)),
+                new ImageStride(80, enemyStrides)));
+            enemies.Add(new Enemy(this,
+                new DynamicShape(new Vec2F(0.8f, 0.9f), new Vec2F(0.1f, 0.1f)),
+                new ImageStride(80, enemyStrides)));
         }
 
+        public void IterateShots() {
+            foreach (var shot in playershots) {
+                shot.Shape.Move();
+                if (shot.Shape.Position.Y > 1.0f) {
+                    shot.DeleteEntity();
+                }
+
+                foreach (var enemy in enemies) {
+                    if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape)
+                        .Collision) {
+                        enemy.DeleteEntity();
+                        shot.DeleteEntity();
+                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y, 0.1f, 0.1f);
+                        score.Addpoint();
+                    }
+
+                }
+
+                List<Enemy> newEnemies = new List<Enemy>();
+                foreach (Enemy enemy in enemies) {
+                    if (!enemy.IsDeleted()) {
+                        newEnemies.Add(enemy);
+                    }
+                }
+
+                enemies = newEnemies;
+
+                List<PlayerShot> newPlayershots = new List<PlayerShot>();
+                foreach (PlayerShot playershot in playershots) {
+                    if (!playershot.IsDeleted()) {
+                        newPlayershots.Add(playershot);
+                    }
+                }
+
+                PlayerShots = newPlayershots;
+            }
+        }
 
         public void GameLoop() {
             AddEnemies();
@@ -99,16 +160,12 @@ namespace Galaga_Exercise_2 {
             }
         }
 
-        public void IterateShots() {
-            foreach (PlayerShot shot in PlayerShots) {
-                shot.Shape.Move();
-                if (shot.Shape.Position.Y > 1.0f) {
-                    shot.DeleteEntity();
-                }
+        
+        public void AddExplosion(float posX, float posY, float extentX, float extentY) {
+            explosions.AddAnimation(
+                new StationaryShape(posX, posY, extentX, extentY), explosionLength,
+                new ImageStride(explosionLength / 8, explosionStrides));
 
-                foreach (var enemy in enemies) { }
-
-            }
         }
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
