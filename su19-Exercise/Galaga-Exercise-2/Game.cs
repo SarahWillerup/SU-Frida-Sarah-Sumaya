@@ -79,7 +79,7 @@ namespace Galaga_Exercise_2 {
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
-                    player.RenderEntity();
+                    player.Entity.RenderEntity();
                     foreach (Enemy enemy in enemies) {
                         enemy.RenderEntity();
 
@@ -108,8 +108,6 @@ namespace Galaga_Exercise_2 {
 
             }
         }
-
-
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
                 switch (eventType) {
@@ -129,10 +127,10 @@ namespace Galaga_Exercise_2 {
                 case GameEventType.InputEvent:
                     switch (gameEvent.Parameter1) {
                     case "KEY_PRESS":
-                        KeyPress(gameEvent.Message);
+                        player.KeyPress(gameEvent.Message);
                         break;
                     case "KEY_RELEASE":
-                        KeyRelease(gameEvent.Message);
+                        player.KeyRelease(gameEvent.Message);
                         break;
                     }
 
@@ -140,6 +138,7 @@ namespace Galaga_Exercise_2 {
                 }
             }
         }
+
     }
 
 }  
