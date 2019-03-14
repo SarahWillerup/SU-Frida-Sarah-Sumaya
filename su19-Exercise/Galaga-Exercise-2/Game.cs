@@ -32,6 +32,10 @@ namespace Galaga_Exercise_2 {
                 GameEventType.InputEvent,
                 GameEventType.WindowEvent,
             });
+            eventBus.RegisterEvent(
+                GameEventFactory<object>.CreateGameEventForAllProcessors(
+                    GameEventType.PlayerEvent, this, "ATTACK", "SWORD", "5"));
+
             win.RegisterEventBus(eventBus);
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
@@ -79,7 +83,7 @@ namespace Galaga_Exercise_2 {
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
-                    player.RenderEntity();
+                    player.Entity.RenderEntity();
                     foreach (Enemy enemy in enemies) {
                         enemy.RenderEntity();
 
@@ -123,16 +127,16 @@ namespace Galaga_Exercise_2 {
                     break;
 
                 case GameEventType.PlayerEvent:
-
+                    
 
 
                 case GameEventType.InputEvent:
                     switch (gameEvent.Parameter1) {
                     case "KEY_PRESS":
-                        KeyPress(gameEvent.Message);
+                        player.KeyPress(gameEvent.Message);
                         break;
                     case "KEY_RELEASE":
-                        KeyRelease(gameEvent.Message);
+                        player.KeyRelease(gameEvent.Message);
                         break;
                     }
 
