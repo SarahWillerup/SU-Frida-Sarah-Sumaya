@@ -142,7 +142,7 @@ namespace Galaga_Exercise_2 {
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
-                    player.Entity.RenderEntity();
+                    player.entity.RenderEntity();
                     foreach (Enemy enemy in enemies) {
                         enemy.RenderEntity();
 

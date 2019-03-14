@@ -9,7 +9,7 @@ using DIKUArcade.Math;
 
 namespace Galaga_Exercise_2 {
     public class Player : IGameEventProcessor<object> {
-        public Entity Entity { get; private set; }
+        public Entity entity { get;}
         private Game game;
         private GameEventBus<object> eventBus;
         private DIKUArcade.Window win;
@@ -22,27 +22,28 @@ namespace Galaga_Exercise_2 {
             eventBus.InitializeEventBus(new List<GameEventType>() {
                 GameEventType.InputEvent,
                 GameEventType.WindowEvent,
+                GameEventType.PlayerEvent
             });
             eventBus.RegisterEvent(
                 GameEventFactory<object>.CreateGameEventForAllProcessors(
-                    GameEventType.Event, this, "ATTACK", "SWORD", "5"));
+                    GameEventType.PlayerEvent, this, "ATTACK", "SWORD", "5"));
 
         }
 
         private void Direction(Vec2F v1) {
-            Entity.Shape.AsDynamicShape().Direction = v1;
+            entity.Shape.AsDynamicShape().Direction = v1;
         }
 
         public void Move() {
-            Vec2F newPos = Entity.Shape.Position + Entity.Shape.AsDynamicShape().Direction;
-            if (newPos.X > 0||1 < newPos.X)
-                Entity.Shape.Move();
-
+            if ((entity.Shape.AsDynamicShape().Direction.X > 0 && entity.Shape.Position.X < 1 - entity.Shape.Extent.X) || 
+            (entity.Shape.AsDynamicShape().Direction.X < 0 && entity.Shape.Position.X > 0)) {
+                entity.Shape.Move();
+            }
         }
 
         public void PlayerShotAdded() {
             game.playershots.Add(new PlayerShot(game,
-                new DynamicShape(new Vec2F(Entity.Shape.Position.X + Entity.Shape.Extent.X / 2, Entity.Shape.Position.Y + Entity.Shape.Extent.Y), new Vec2F(0.008f, 0.027f)),
+                new DynamicShape(new Vec2F(entity.Shape.Position.X + entity.Shape.Extent.X / 2, entity.Shape.Position.Y + entity.Shape.Extent.Y), new Vec2F(0.008f, 0.027f)),
                 game.PlayerShot));
         }
 
