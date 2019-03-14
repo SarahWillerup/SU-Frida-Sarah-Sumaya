@@ -18,6 +18,7 @@ namespace Galaga_Exercise_2 {
         public List<Enemy> enemies;
         public List<PlayerShot> PlayerShots;
         public Image PlayerShot;
+        private IGameEventProcessor<object> gameEventProcessorImplementation;
 
         public Game() {
             // Add reasonable values
@@ -110,43 +111,15 @@ namespace Galaga_Exercise_2 {
             }
         }
 
-        public void KeyPress(string key) {
-            switch (key) {
-            case "KEY_ESCAPE":
-                eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.WindowEvent, this, "CLOSE_WINDOW", "", ""));
-                break;
-            case "KEY_LEFT":
-                player.Direction(new Vec2F(0.01f, 0.0f));
-                break;
-            case "KEY_RIGHT":
-                player.Direction(new Vec2F(0.01f,0.0f));
-                break;   
-            }  
-        }
-
-        public void KeyRelease(string key) {
-            switch (key) {
-            case "KEY_LEFT":
-                player.Direction(new Vec2F(-0.01f, 0.00f));
-                break;
-            case "KEY_RIGHT":
-                player.Direction(new Vec2F(0.01f, 0.00f));
-                break;
-            case "SPACE":
-                break;
-            }
-        }
 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
                 switch (gameEvent.Message) {
-                    case "CLOSUE_WINDOW":
-                        win.CloseWindow();
-                        break;
-                    default:
-                        break;
+                case "CLOSUE_WINDOW":
+                    win.CloseWindow();
+                    break;
+                default:
+                    break;
                         
                 }
 
@@ -162,10 +135,8 @@ namespace Galaga_Exercise_2 {
                     break;
                 }
             }
-            
-            
-
         }
+    }
  
     }
 }  
