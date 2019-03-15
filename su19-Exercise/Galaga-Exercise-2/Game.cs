@@ -56,7 +56,7 @@ namespace Galaga_Exercise_2 {
             explosionStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "Explosion.png"));
 
-            score =  new Score(new Vec2F(0.05f,0.04f),new Vec2F(0.5f,0.5f));
+            score = new Score(new Vec2F(0.05f,0.04f),new Vec2F(0.5f,0.5f));
             
             explosionStrides =
                 ImageStride.CreateStrides(8, Path.Combine("Assets", "Images", "Explosion.png"));
@@ -129,31 +129,35 @@ namespace Galaga_Exercise_2 {
         }
 
         public void GameLoop() {
-            AddEnemies();
             while (win.IsRunning()) {
                 gameTimer.MeasureTime();
                 while (gameTimer.ShouldUpdate()) {
                     win.PollEvents();
-                    eventBus.ProcessEvents();
-                    // IterateShots();
-                    playershots = new List<PlayerShot>();
-                    
+                    IterateShots();
                     player.Move();
+                    eventBus.ProcessEvents();
                     //Update game logic here
                 }
-                
+
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
+                    
+                    
                     player.player.RenderEntity();
+                    
+                    foreach (PlayerShot shot in playershots) {
+                        shot.RenderEntity();
+                    }
                     foreach (Enemy enemy in enemies) {
                         enemy.RenderEntity();
 
                     }
-                    score.RenderScore();
                     explosions.RenderAnimations();
+
+                    score.RenderScore();
+
                     win.SwapBuffers();
-                    
 
                 }
 
