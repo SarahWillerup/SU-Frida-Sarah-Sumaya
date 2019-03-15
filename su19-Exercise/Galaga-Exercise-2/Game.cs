@@ -142,7 +142,7 @@ namespace Galaga_Exercise_2 {
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
-                    player.entity.RenderEntity();
+                    player.player.RenderEntity();
                     foreach (Enemy enemy in enemies) {
                         enemy.RenderEntity();
 
@@ -166,6 +166,46 @@ namespace Galaga_Exercise_2 {
                 new StationaryShape(posX, posY, extentX, extentY), explosionLength,
                 new ImageStride(explosionLength / 8, explosionStrides));
 
+        }
+        public void KeyPress(string key) {
+            switch (key) {
+            case "KEY_ESCAPE":
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.WindowEvent, this, "CLOSE_WINDOW", "", ""));
+                break;
+            case "KEY_LEFT":
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForSpecificProcessor(
+                        GameEventType.PlayerEvent, this, player, "KEY_LEFT", "", ""));
+                break;
+            case "KEY_RIGHT":
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForSpecificProcessor(
+                        GameEventType.PlayerEvent, this, player, "KEY_RIGHT", "", ""));
+                break;
+            case "KEY_SPACE":
+                eventBus.RegisterEvent(
+                    GameEventFactory<object>.CreateGameEventForSpecificProcessor(
+                        GameEventType.PlayerEvent, this, player, "KEY_SPACE", "", ""));
+                break;
+            default:
+                break;
+            }
+        }
+
+        public void KeyRelease(string key) {
+            switch (key) {
+            case "KEY_LEFT":
+                if (key.Equals("KEY_LEFT") || key.Equals("KEY_RIGHT")) {
+                    eventBus.RegisterEvent(
+                        GameEventFactory<object>.CreateGameEventForSpecificProcessor(
+                            GameEventType.PlayerEvent, this, player, "NO_MOVE", "", ""));
+                }
+                break;
+            default:
+                break;
+            }
         }
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
