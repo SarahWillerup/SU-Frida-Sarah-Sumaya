@@ -8,6 +8,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Timers;
 using DIKUArcade.Physics;
+using Galaga_Exercise_2.GalagaEntities.Enemy;
 
 namespace Galaga_Exercise_2 {
     public class Game : IGameEventProcessor<object> {

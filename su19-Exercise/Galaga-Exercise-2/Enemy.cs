@@ -4,8 +4,8 @@ using System.IO.Pipes;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
-namespace Galaga_Exercise_2 {
-    public class Enemy : Entity {
+namespace Galaga_Exercise_2.GalagaEntities.Enemy {
+    public class Enemy :  Entity {
         private Game game;
         public DynamicShape shape;
         private Vec2F vec2F { get; }
