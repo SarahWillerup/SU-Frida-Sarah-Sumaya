@@ -9,3 +9,14 @@
 /Users/sarahwillerup/Documents/Datalogi/Software D/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/obj/Debug/Galaga-Exercise-1.csproj.CopyComplete
 /Users/sarahwillerup/Documents/Datalogi/Software D/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/obj/Debug/Galaga_Exercise_1.exe
 /Users/sarahwillerup/Documents/Datalogi/Software D/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/obj/Debug/Galaga_Exercise_1.pdb
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/bin/Debug/Galaga_Exercise_1.exe
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/bin/Debug/Galaga_Exercise_1.pdb
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/bin/Debug/DIKUArcade.dll
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/bin/Debug/OpenTK.dll
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/bin/Debug/DIKUArcade.pdb
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/bin/Debug/OpenTK.xml
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/obj/Debug/Galaga-Exercise-1.csprojAssemblyReference.cache
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/obj/Debug/Galaga-Exercise-1.csproj.CoreCompileInputs.cache
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/obj/Debug/Galaga-Exercise-1.csproj.CopyComplete
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/obj/Debug/Galaga_Exercise_1.exe
+/Users/sarahwillerup/Documents/GitHub/SU-Frida-Sarah/su19-Exercise/Galaga-Exercise-1/obj/Debug/Galaga_Exercise_1.pdb
