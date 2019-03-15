@@ -23,8 +23,6 @@ namespace Galaga_Exercise_2 {
         private AnimationContainer explosions;
         private int explosionLength = 500;
         private Score score;
-        public List<PlayerShot> PlayerShots;
-        private IGameEventProcessor<object> gameEventProcessorImplementation;
 
         public Game() {
             // Add reasonable values
@@ -53,7 +51,7 @@ namespace Galaga_Exercise_2 {
             AddEnemies();
 
             PlayerShot = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
-            PlayerShots = new List<PlayerShot>();
+            playershots = new List<PlayerShot>();
 
             explosionStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "Explosion.png"));
@@ -126,7 +124,7 @@ namespace Galaga_Exercise_2 {
                     }
                 }
 
-                PlayerShots = newPlayershots;
+                playershots = newPlayershots;
             }
         }
 
@@ -138,7 +136,7 @@ namespace Galaga_Exercise_2 {
                     win.PollEvents();
                     eventBus.ProcessEvents();
                     // IterateShots();
-                    PlayerShots = new List<PlayerShot>();
+                    playershots = new List<PlayerShot>();
                     
                     player.Move();
                     //Update game logic here
