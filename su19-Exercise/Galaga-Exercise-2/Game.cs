@@ -51,7 +51,7 @@ namespace Galaga_Exercise_2 {
             enemyStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             enemies = new List<Enemy>();
-            CreateEnemy(enemyStrides);
+            CreatingEnemy(enemyStrides);
 
 
             PlayerShot = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
@@ -140,6 +140,8 @@ namespace Galaga_Exercise_2 {
                     IterateShots();
                     player.Move();
                     eventBus.ProcessEvents();
+                    ZigZagDown();
+
                     //Update game logic here
                 }
 
@@ -158,6 +160,8 @@ namespace Galaga_Exercise_2 {
                         enemy.RenderEntity();
 
                     }
+                    
+
 
                     explosions.RenderAnimations();
 
@@ -267,7 +271,7 @@ namespace Galaga_Exercise_2 {
             throw new NotSupportedException();
         }
 
-        public void CreateEnemy(List<Image> enemyStrides) {
+        public void CreatingEnemy(List<Image> enemyStrides) {
             float initValue = 0.1f;
             Enemies = new EntityContainer<Enemy>(8);
             for (int i = 0; i < 8; i++) {
@@ -283,7 +287,7 @@ namespace Galaga_Exercise_2 {
             }
         }
 
-        public void CreateEnemiesSpot(List<Image> enemyStrides) {
+        public void CreateEnemiesSpoting(List<Image> enemyStrides) {
             float initValue = 0.1f;
             Enemies = new EntityContainer<Enemy>(8);
             for (int i = 0; i < 8; i++) {
@@ -299,7 +303,7 @@ namespace Galaga_Exercise_2 {
             }
         }
 
-        public void CreateEnemiesZig(List<Image> enemyStrides) {
+        public void CreatingEnemiesZigZag(List<Image> enemyStrides) {
             float initValueX = 0.0f;
             float initValueY = 0.7f;
 
@@ -321,11 +325,11 @@ namespace Galaga_Exercise_2 {
         }
 
         public void NoMove() {
-            MoveEnemy(null);
+            MovesEnemy(null);
         }
 
         public void Down(EntityContainer<Enemy> enemies) {
-            MoveEnemies(enemies);
+            MovingEnemies(enemies);
         }
 
         public void ZigZagDown(EntityContainer<Enemy> enemies) {
@@ -333,13 +337,13 @@ namespace Galaga_Exercise_2 {
 
             foreach (var enem in enemies) {
                 if (((Enemy) enem).shape.Position.Y - prevPosY > 0.1f) {
-                    MoveEnemy((Enemy) enem);
+                    MovesEnemy((Enemy) enem);
                     prevPosY = ((Enemy) enem).shape.Position.Y;
                 }
             }
         }
 
-    public void MoveEnemy(Enemy enemy) {
+    public void MovesEnemy(Enemy enemy) {
             float newY = 0.0f;
             float newX = 0.0f;
 
@@ -348,7 +352,7 @@ namespace Galaga_Exercise_2 {
             
             enemy.shape.Position = new Vec2F(newX, newY);
         }
-        public void MoveEnemies(EntityContainer<Enemy> enemies) {
+        public void MovingEnemies(EntityContainer<Enemy> enemies) {
             foreach (var enem in enemies) {
                 ((Enemy) enem).shape.MoveY(-0.005f);
                 
