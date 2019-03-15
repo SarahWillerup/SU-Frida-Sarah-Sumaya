@@ -40,7 +40,7 @@ namespace Galaga_Exercise_2 {
                 GameEventType.WindowEvent,
                 GameEventType.PlayerEvent
             });
-           
+
 
             win.RegisterEventBus(eventBus);
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
@@ -51,6 +51,7 @@ namespace Galaga_Exercise_2 {
             enemyStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             enemies = new List<Enemy>();
+            CreateEnemy(enemyStrides);
 
 
             PlayerShot = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
@@ -59,8 +60,8 @@ namespace Galaga_Exercise_2 {
             explosionStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "Explosion.png"));
 
-            score = new Score(new Vec2F(0.05f,0.04f),new Vec2F(0.5f,0.5f));
-            
+            score = new Score(new Vec2F(0.05f, 0.04f), new Vec2F(0.5f, 0.5f));
+
             explosionStrides =
                 ImageStride.CreateStrides(8, Path.Combine("Assets", "Images", "Explosion.png"));
             explosions = new AnimationContainer(10);
@@ -145,17 +146,19 @@ namespace Galaga_Exercise_2 {
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
-                    
-                    
+
+
                     player.player.RenderEntity();
-                    
+
                     foreach (PlayerShot shot in playershots) {
                         shot.RenderEntity();
                     }
+
                     foreach (Enemy enemy in enemies) {
                         enemy.RenderEntity();
 
                     }
+
                     explosions.RenderAnimations();
 
                     score.RenderScore();
@@ -172,13 +175,14 @@ namespace Galaga_Exercise_2 {
             }
         }
 
-        
+
         public void AddExplosion(float posX, float posY, float extentX, float extentY) {
             explosions.AddAnimation(
                 new StationaryShape(posX, posY, extentX, extentY), explosionLength,
                 new ImageStride(explosionLength / 8, explosionStrides));
 
         }
+
         public void KeyPress(string key) {
             switch (key) {
             case "KEY_ESCAPE":
@@ -212,21 +216,23 @@ namespace Galaga_Exercise_2 {
                 if (key.Equals("KEY_LEFT") || key.Equals("KEY_RIGHT")) {
                     eventBus.RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
-                            GameEventType.PlayerEvent, this,  "NO_MOVE", "", ""));
+                            GameEventType.PlayerEvent, this, "NO_MOVE", "", ""));
                 }
+
                 break;
             case "KEY_RIGHT":
                 if (key.Equals("KEY_RIGHT") || key.Equals("KEY_LEFT")) {
                     eventBus.RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
-                            GameEventType.PlayerEvent, this,  "NO_MOVE", "", ""));
+                            GameEventType.PlayerEvent, this, "NO_MOVE", "", ""));
                 }
+
                 break;
             default:
                 break;
             }
         }
-        
+
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
                 switch (gameEvent.Message) {
@@ -234,25 +240,26 @@ namespace Galaga_Exercise_2 {
                     win.CloseWindow();
                     break;
                 default:
-                   break;
-                    }
-                
-            } else if (eventType == GameEventType.InputEvent) {
-                        switch (gameEvent.Parameter1) {
-                        case "KEY_PRESS":
-                            KeyPress(gameEvent.Message);
-                            break;
-                        case "KEY_RELEASE":
-                            KeyRelease(gameEvent.Message);
-                            break;
-                        default:
-                            break;
-                        }
-
-                    }
-                 
-                    
+                    break;
                 }
+
+            } else if (eventType == GameEventType.InputEvent) {
+                switch (gameEvent.Parameter1) {
+                case "KEY_PRESS":
+                    KeyPress(gameEvent.Message);
+                    break;
+                case "KEY_RELEASE":
+                    KeyRelease(gameEvent.Message);
+                    break;
+                default:
+                    break;
+                }
+
+            }
+
+
+        }
+
         public EntityContainer<Enemy> Enemies { get; set; }
         public int MaxEnemies;
 
@@ -265,17 +272,56 @@ namespace Galaga_Exercise_2 {
             Enemies = new EntityContainer<Enemy>(8);
             for (int i = 0; i < 8; i++) {
                 initValue += 0.1f;
-                enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(initValue,0.9f),new Vec2F(0.1f,0.1f)),
+                enemies.Add(new Enemy(this,
+                    new DynamicShape(new Vec2F(initValue, 0.9f), new Vec2F(0.1f, 0.1f)),
                     new ImageStride(80, enemyStrides)));
             }
 
             foreach (var elem in enemies) {
                 Enemies.AddStationaryEntity(elem);
-                
+
+            }
+        }
+
+        public void CreateEnemiesSpot(List<Image> enemyStrides) {
+            float initValue = 0.1f;
+            Enemies = new EntityContainer<Enemy>(8);
+            for (int i = 0; i < 8; i++) {
+                initValue += 0.1f;
+                enemies.Add(new Enemy(this,
+                    new DynamicShape(new Vec2F(initValue, 0.9f), new Vec2F(0.1f, 0.1f)),
+                    new ImageStride(80, enemyStrides)));
+            }
+
+            foreach (var elem in enemies) {
+                Enemies.AddStationaryEntity(elem);
+
+            }
+        }
+
+        public void CreateEnemiesZig(List<Image> enemyStrides) {
+            float initValueX = 0.0f;
+            float initValueY = 0.7f;
+
+            Enemies = new EntityContainer<Enemy>(8);
+
+            for (int i = 0; i < 8; i++) {
+                initValueX += 0.1f;
+                initValueY += 0.02f;
+                enemies.Add(new Enemy(this,
+                    new DynamicShape(new Vec2F(initValueX, initValueY), new Vec2F(0.1f, 0.1f)),
+                    new ImageStride(80, enemyStrides)));
+
+            }
+
+            foreach (var elem in enemies) {
+                Enemies.AddStationaryEntity(elem);
+
             }
         }
     }
- }
+}
+ 
 
  
     
