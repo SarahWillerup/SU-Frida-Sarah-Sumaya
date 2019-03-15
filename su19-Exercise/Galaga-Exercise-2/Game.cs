@@ -143,7 +143,7 @@ namespace Galaga_Exercise_2 {
                     player.Move();
                     //Update game logic here
                 }
-
+                
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
                     // Render gameplay entities here
@@ -205,6 +205,13 @@ namespace Galaga_Exercise_2 {
             switch (key) {
             case "KEY_LEFT":
                 if (key.Equals("KEY_LEFT") || key.Equals("KEY_RIGHT")) {
+                    eventBus.RegisterEvent(
+                        GameEventFactory<object>.CreateGameEventForAllProcessors(
+                            GameEventType.PlayerEvent, this,  "NO_MOVE", "", ""));
+                }
+                break;
+            case "KEY_RIGHT":
+                if (key.Equals("KEY_RIGHT") || key.Equals("KEY_LEFT")) {
                     eventBus.RegisterEvent(
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.PlayerEvent, this,  "NO_MOVE", "", ""));
