@@ -51,7 +51,7 @@ namespace Galaga_Exercise_2 {
             enemyStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             enemies = new List<Enemy>();
-            AddEnemies();
+
 
             PlayerShot = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
             playershots = new List<PlayerShot>();
@@ -66,7 +66,7 @@ namespace Galaga_Exercise_2 {
             explosions = new AnimationContainer(10);
         }
 
-        public void AddEnemies() {
+        /*public void AddEnemies() {
             enemies.Add(new Enemy(this,
                 new DynamicShape(new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
                 new ImageStride(80, enemyStrides)));
@@ -92,7 +92,7 @@ namespace Galaga_Exercise_2 {
                 new DynamicShape(new Vec2F(0.8f, 0.9f), new Vec2F(0.1f, 0.1f)),
                 new ImageStride(80, enemyStrides)));
         }
-
+*/
         public void IterateShots() {
             foreach (var shot in playershots) {
                 shot.Shape.Move();
@@ -261,7 +261,18 @@ namespace Galaga_Exercise_2 {
         }
 
         public void CreateEnemy(List<Image> enemyStrides) {
-            AddEnemies();
+            float initValue = 0.1f;
+            Enemies = new EntityContainer<Enemy>(8);
+            for (int i = 0; i < 8; i++) {
+                initValue += 0.1f;
+                enemies.Add(new Enemy(this, new DynamicShape(new Vec2F(initValue,0.9f),new Vec2F(0.1f,0.1f)),
+                    new ImageStride(80, enemyStrides)));
+            }
+
+            foreach (var elem in enemies) {
+                Enemies.AddStationaryEntity(elem);
+                
+            }
         }
     }
  }
