@@ -9,9 +9,11 @@ using DIKUArcade.Math;
 using DIKUArcade.Timers;
 using DIKUArcade.Physics;
 using Galaga_Exercise_2.GalagaEntities.Enemy;
+using Galaga_Exercise_2.Squadrons;
 
 namespace Galaga_Exercise_2 {
     public class Game : IGameEventProcessor<object> {
+        public ISquadron isquadron { get; set; }
         private Window win;
         private DIKUArcade.Timers.GameTimer gameTimer;
         private Player player;
