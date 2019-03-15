@@ -176,18 +176,18 @@ namespace Galaga_Exercise_2 {
                 break;
             case "KEY_LEFT":
                 eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForSpecificProcessor(
-                        GameEventType.PlayerEvent, this, player, "KEY_LEFT", "", ""));
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "KEY_LEFT", "", ""));
                 break;
             case "KEY_RIGHT":
                 eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForSpecificProcessor(
-                        GameEventType.PlayerEvent, this, player, "KEY_RIGHT", "", ""));
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "KEY_RIGHT", "", ""));
                 break;
             case "KEY_SPACE":
                 eventBus.RegisterEvent(
-                    GameEventFactory<object>.CreateGameEventForSpecificProcessor(
-                        GameEventType.PlayerEvent, this, player, "KEY_SPACE", "", ""));
+                    GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "KEY_SPACE", "", ""));
                 break;
             default:
                 break;
@@ -199,49 +199,44 @@ namespace Galaga_Exercise_2 {
             case "KEY_LEFT":
                 if (key.Equals("KEY_LEFT") || key.Equals("KEY_RIGHT")) {
                     eventBus.RegisterEvent(
-                        GameEventFactory<object>.CreateGameEventForSpecificProcessor(
-                            GameEventType.PlayerEvent, this, player, "NO_MOVE", "", ""));
+                        GameEventFactory<object>.CreateGameEventForAllProcessors(
+                            GameEventType.PlayerEvent, this,  "NO_MOVE", "", ""));
                 }
                 break;
             default:
                 break;
             }
         }
+        
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.WindowEvent) {
-                switch (eventType) {
-                case GameEventType.WindowEvent:
-                    switch (gameEvent.Message) {
-                    case "CLOSUE_WINDOW":
-                        win.CloseWindow();
-                        break;
+                switch (gameEvent.Message) {
+                case "CLOSE_WINDOW":
+                    win.CloseWindow();
+                    break;
+                default:
+                   break;
                     }
+                
+            } else if (eventType == GameEventType.InputEvent) {
+                        switch (gameEvent.Parameter1) {
+                        case "KEY_PRESS":
+                            KeyPress(gameEvent.Message);
+                            break;
+                        case "KEY_RELEASE":
+                            KeyRelease(gameEvent.Message);
+                            break;
+                        default:
+                            break;
+                        }
 
-                    break;
-
-                case GameEventType.PlayerEvent:
-                    player.ProcessEvent( eventType,  gameEvent);
-                    break;
+                    }
+                 
                     
-
-
-                case GameEventType.InputEvent:
-                    switch (gameEvent.Parameter1) {
-                    case "KEY_PRESS":
-                        player.KeyPress(gameEvent.Message);
-                        break;
-                    case "KEY_RELEASE":
-                        player.KeyRelease(gameEvent.Message);
-                        break;
-                    }
-
-                    break;
                 }
             }
-        }
+ }
 
-    }
-
-}  
+ 
     
 
