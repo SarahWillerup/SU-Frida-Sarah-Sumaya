@@ -37,10 +37,12 @@ namespace Galaga_Exercise_2 {
             eventBus.InitializeEventBus(new List<GameEventType>() {
                 GameEventType.InputEvent,
                 GameEventType.WindowEvent,
+                GameEventType.PlayerEvent
             });
            
 
             win.RegisterEventBus(eventBus);
+            eventBus.Subscribe(GameEventType.PlayerEvent, player);
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
 
@@ -135,6 +137,9 @@ namespace Galaga_Exercise_2 {
                 while (gameTimer.ShouldUpdate()) {
                     win.PollEvents();
                     eventBus.ProcessEvents();
+                    // IterateShots();
+                    PlayerShots = new List<PlayerShot>();
+                    
                     player.Move();
                     //Update game logic here
                 }
@@ -147,8 +152,10 @@ namespace Galaga_Exercise_2 {
                         enemy.RenderEntity();
 
                     }
-
+                    score.RenderScore();
+                    explosions.RenderAnimations();
                     win.SwapBuffers();
+                    
 
                 }
 
