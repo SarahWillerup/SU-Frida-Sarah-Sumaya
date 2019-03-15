@@ -253,7 +253,17 @@ namespace Galaga_Exercise_2 {
                  
                     
                 }
-            }
+        public EntityContainer<Enemy> Enemies { get; set; }
+        public int MaxEnemies;
+
+        public void CreateEnemy(List<System.Drawing.Image> enemyStrides) {
+            throw new NotSupportedException();
+        }
+
+        public void CreateEnemy(List<Image> enemyStrides) {
+            AddEnemies();
+        }
+    }
  }
 
  
