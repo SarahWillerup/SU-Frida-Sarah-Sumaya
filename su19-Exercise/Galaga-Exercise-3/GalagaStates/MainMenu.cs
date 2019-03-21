@@ -43,7 +43,7 @@ namespace Galaga_Exercise_3.GalagaStates {
         public void UpdateGameLogic() { }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
-            switch (keyValue) {
+            switch (keyAction) {
             case "KEY_UP":
                 GameEventFactory<object>.CreateGameEventForAllProcessors(
                     GameEventType.GameStateEvent,
@@ -58,14 +58,14 @@ namespace Galaga_Exercise_3.GalagaStates {
                 GameEventFactory<object>.CreateGameEventForAllProcessors(
                     GameEventType.GameStateEvent,
                     this, "KEY_ENTER", "NEW_GAME", "QUIT");
-                if (keyValue == "NEW_GAME") {
+                if (keyAction == "NEW_GAME") {
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
                         GameEventType.GameStateEvent,
                         this,
                         "CHANGE_STATE",
                         "GAME_RUNNING", "");
                     
-                } else if (keyValue == "QUIT") {
+                } else if (keyAction == "QUIT") {
                     GameEventFactory<object>.CreateGameEventForAllProcessors(
                         GameEventType.WindowEvent,
                         this,
