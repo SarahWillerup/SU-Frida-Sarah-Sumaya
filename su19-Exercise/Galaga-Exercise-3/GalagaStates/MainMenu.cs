@@ -43,7 +43,8 @@ namespace Galaga_Exercise_3.GalagaStates {
         public void UpdateGameLogic() { }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
-            switch (keyAction) {
+            if (keyAction == "KEY_PRESS") {
+            switch (keyValue) {
             case "KEY_UP":
                 GameEventFactory<object>.CreateGameEventForAllProcessors(
                     GameEventType.GameStateEvent,
