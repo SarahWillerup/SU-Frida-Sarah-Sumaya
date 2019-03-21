@@ -18,13 +18,17 @@ namespace GalagaGame.GalagaState {
 
         private void SwitchState (GameStateType stateType) {
             switch (stateType) {
-            case StateTransformer.TransformStringToState("GAME_RUNNING"):
+            case :
                 
                
             
             
             }
 
+        }
+
+        private void Types(GameEventType eventType, GameEvent<object> gameEvent) {
+            ....
         }
 
     }
