@@ -44,11 +44,12 @@ namespace Galaga_Exercise_3.GalagaStates {
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
             if (keyAction == "KEY_PRESS") {
-            switch (keyValue) {
-            case "KEY_UP":
-                activeMenuButton = 0;
-                activeMenuButton = menuButtons[0].SetColor((int)(vec.X * 255.0f), (int)(vec.Y * 255.0f), (int)(vec.Z * 255.0f));
-                    
+                switch (keyValue) {
+                case "KEY_UP":
+                    activeMenuButton = 0;
+                    activeMenuButton = menuButtons[0].SetColor();
+                
+
                 break;
             case "KEY_DOWN":
                 GameEventFactory<object>.CreateGameEventForAllProcessors(

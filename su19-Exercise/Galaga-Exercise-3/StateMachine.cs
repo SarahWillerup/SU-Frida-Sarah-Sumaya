@@ -7,6 +7,7 @@ using Galaga_Exercise_3.GalagaStates;
 namespace Galaga_Exercise_3 {
     public class StateMachine : IGameEventProcessor<object> {
         public GameStateType gamestatetype;
+        private IGameEventProcessor<object> gameEventProcessorImplementation;
         public IGameState ActiveState { get; private set; }
 
         public StateMachine() {

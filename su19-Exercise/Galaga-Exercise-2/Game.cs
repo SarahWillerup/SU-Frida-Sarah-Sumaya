@@ -140,7 +140,6 @@ namespace Galaga_Exercise_2 {
                     IterateShots();
                     player.Move();
                     eventBus.ProcessEvents();
-                    ZigZagDown();
 
                     //Update game logic here
                 }
