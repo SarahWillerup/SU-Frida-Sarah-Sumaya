@@ -39,21 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diamant.cs" />
-    <Compile Include="Down.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="MovementStrategy.cs" />
-    <Compile Include="NoMove.cs" />
+    <Compile Include="ISquadron\Diamant.cs" />
+    <Compile Include="ISquadron\ISquadrons.cs" />
+    <Compile Include="ISquadron\T.cs" />
+    <Compile Include="ISquadron\V.cs" />
+    <Compile Include="MovementStrategy\Down.cs" />
+    <Compile Include="MovementStrategy\MovementStrategy.cs" />
+    <Compile Include="MovementStrategy\NoMove.cs" />
+    <Compile Include="MovementStrategy\ZigZagDown.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerShot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Score.cs" />
-    <Compile Include="ISquadrons.cs" />
-    <Compile Include="T.cs" />
-    <Compile Include="V.cs" />
-    <Compile Include="ZigZagDown.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DIKUArcade\DIKUArcade\DIKUArcade.csproj">
