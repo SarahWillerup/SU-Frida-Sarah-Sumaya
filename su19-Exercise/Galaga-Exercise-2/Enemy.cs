@@ -8,7 +8,7 @@ using DIKUArcade.Math;
 namespace Galaga_Exercise_2.GalagaEntities.Enemy {
     public class Enemy :  Entity {
         public DynamicShape shape;
-        private Vec2F StartPos { get; }
+        public Vec2F StartPos { get; }
 
         public Enemy( DynamicShape shape, IBaseImage image)
             : base(shape, image) {
