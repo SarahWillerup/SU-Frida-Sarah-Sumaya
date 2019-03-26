@@ -6,25 +6,18 @@ using Galaga_Exercise_2.GalagaEntities.Enemy;
 namespace Galaga_Exercise_2 {
     public class Down {
         public void MoveEnemy(Enemy enemy) {
-            float newY = 0.0f;
-            float newX = 0.0f;
-
-            newY = enemy.shape.Position.Y - 0.0003f;
-            newX = (float)((0.5f + 0.05f * Math.Sin(2*Math.PI) * (0.9f - newY)/ 0.045f));
-            
-            enemy.shape.Position = new Vec2F(newX, newY);
+            enemy.shape.MoveY(-0.002f);
         }
 
+
         public void MoveEnemies(EntityContainer<Enemy> enemies) {
-            foreach (var enem in enemies) {
-                ((Enemy) enem).shape.MoveY(-0.005f);
+            foreach (Enemy enemy in enemies) {
+                MoveEnemy(enemy);
 
             }
         }
 
-        public void D(EntityContainer<Enemy> enemies) {
-            MoveEnemies(enemies);
-        }
+        
        
     }
 }

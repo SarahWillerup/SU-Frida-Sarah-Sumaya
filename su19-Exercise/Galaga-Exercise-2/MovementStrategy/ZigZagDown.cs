@@ -18,22 +18,14 @@ namespace Galaga_Exercise_2.MovementStrategy {
 
 
         public void MoveEnemies(EntityContainer<Enemy> enemies) {
-            foreach (var enem in enemies) {
-                ((Enemy) enem).shape.MoveY(-0.005f);
+            foreach (Enemy enemy in enemies) {
+                MoveEnemy(enemy);
 
             }
         }
 
-        public void ZigZagD(EntityContainer<Enemy> enemies) {
-            float prevPosY = 0.0f;
 
-            foreach (var enem in enemies) {
-                if (((Enemy) enem).shape.Position.Y - prevPosY > 0.1f) {
-                    MoveEnemy((Enemy) enem);
-                    prevPosY = ((Enemy) enem).shape.Position.Y;
-                }
-            }
-        }
+
 
         
     }

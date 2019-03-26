@@ -28,6 +28,11 @@ namespace Galaga_Exercise_2 {
         private int explosionLength = 500;
         private Score score;
         public Diamant diamants;
+        public V v;
+        public T t;
+        public ZigZagDown zigzagdown;
+        public Down down;
+        public NoMove nomove;
 
 
         public Game() {
@@ -75,6 +80,14 @@ namespace Galaga_Exercise_2 {
 
             foreach (Enemy enemy in diamants.Enemies) {
                 enemies.AddDynamicEntity(enemy);
+            }
+            
+            zigzagdown = new ZigZagDown();
+            
+            zigzagdown.MoveEnemies(enemies);
+
+            foreach (Enemy enemy in enemies) {
+                zigzagdown.MoveEnemies(enemies);
             }
         }
 
@@ -214,6 +227,7 @@ public void AddEnemies() {
 
                     score.RenderScore();
                     
+                    zigzagdown.MoveEnemies(enemies);
 
                     win.SwapBuffers();
 
