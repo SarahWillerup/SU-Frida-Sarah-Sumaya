@@ -19,14 +19,15 @@ namespace Galaga_Exercise_2 {
         private Player player;
         private GameEventBus<object> eventBus;
         public List<Image> enemyStrides;
-        public List<Enemy> enemies;
-        public List<PlayerShot> playershots { get; private set; }
+        private EntityContainer <Enemy> enemies;
+        public EntityContainer<PlayerShot> playershots { get; private set; }
         public Image PlayerShot;
         private List<Image> explosionStrides;
         private AnimationContainer explosions;
         private int explosionLength = 500;
         private Score score;
         public Diamant diamants;
+
 
         public Game() {
             // Add reasonable values
@@ -51,27 +52,34 @@ namespace Galaga_Exercise_2 {
 
             enemyStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
-            enemies = new List<Enemy>();
-            AddEnemies();
-
+            enemies = new EntityContainer<Enemy>();
+    
 
             PlayerShot = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
-            playershots = new List<PlayerShot>();
+            playershots = new EntityContainer<PlayerShot>();
 
             explosionStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "Explosion.png"));
 
-            score = new Score(new Vec2F(0.05f, 0.04f), new Vec2F(0.5f, 0.5f));
 
+            score = new Score(new Vec2F(0.05f, 0.04f),new Vec2F(0.5f, 0.5f));
+            
             explosionStrides =
                 ImageStride.CreateStrides(8, Path.Combine("Assets", "Images", "Explosion.png"));
             explosions = new AnimationContainer(10);
-            
+
             diamants = new Diamant();
+            
+            diamants.CreateEnemies(enemyStrides);
+
+            foreach (Enemy enemy in diamants.Enemies) {
+                enemies.AddDynamicEntity(enemy);
+            }
         }
 
-        public void AddEnemies() {
-            enemies.Add(new Enemy(
+/*
+public void AddEnemies() {
+            enemies.AddD(new Enemy(
                 new DynamicShape(new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
                 new ImageStride(80, enemyStrides)));
             enemies.Add(new Enemy(
@@ -96,15 +104,15 @@ namespace Galaga_Exercise_2 {
                 new DynamicShape(new Vec2F(0.8f, 0.9f), new Vec2F(0.1f, 0.1f)),
                 new ImageStride(80, enemyStrides)));
         }
-
+*/
         public void IterateShots() {
-            foreach (var shot in playershots) {
+            foreach (PlayerShot shot in playershots) {
                 shot.Shape.Move();
                 if (shot.Shape.Position.Y > 1.0f) {
                     shot.DeleteEntity();
                 }
 
-                foreach (var enemy in enemies) {
+                foreach (Enemy enemy in diamants.Enemies) {
                     if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape)
                         .Collision) {
                         enemy.DeleteEntity();
@@ -115,26 +123,64 @@ namespace Galaga_Exercise_2 {
 
                 }
 
-                List<Enemy> newEnemies = new List<Enemy>();
-                foreach (Enemy enemy in enemies) {
+               EntityContainer<Enemy> newEnemies = new EntityContainer<Enemy>();
+                foreach (Enemy enemy in diamants.Enemies) {
                     if (!enemy.IsDeleted()) {
-                        newEnemies.Add(enemy);
+                        newEnemies.AddDynamicEntity(enemy);
                     }
                 }
 
-                enemies = newEnemies;
+                 diamants.Enemies = newEnemies;
+                 
 
-                List<PlayerShot> newPlayershots = new List<PlayerShot>();
+                EntityContainer<PlayerShot> newPlayershots = new EntityContainer<PlayerShot>();
                 foreach (PlayerShot playershot in playershots) {
                     if (!playershot.IsDeleted()) {
-                        newPlayershots.Add(playershot);
+                        newPlayershots.AddDynamicEntity(playershot);
                     }
                 }
 
-                playershots = newPlayershots;
+               playershots = newPlayershots;
             }
         }
+        /*
+        public void IterateShots() {
+            playershots.Iterate(delegate(PlayerShot shot) {
+                if (shot.Shape.Position.Y > 1.0f) {
+                    shot.DeleteEntity();
+                } else {
+                    foreach (Enemy enemy in enemies) {
+                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape)
+                            .Collision) {
+                            enemy.DeleteEntity();
+                            shot.DeleteEntity();
+                            AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y, 0.1f,
+                                0.1f);
+                            score.Addpoint();
+                        
+                    
 
+                    EntityContainer<Enemy> newEnemies = new EntityContainer<Enemy>();
+                            foreach (Enemy e in enemies) {
+                                if (!e.IsDeleted()) {
+                                    newEnemies.AddDynamicEntity(e);
+                                }
+                            }
+
+                            AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,
+                                enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
+                            enemy.DeleteEntity();
+                            shot.DeleteEntity();   
+                        }
+                    }
+
+                    if (!shot.IsDeleted()) {
+                        shot.Shape.Move();
+                    }
+                }
+            });
+        }
+        */
         public void GameLoop() {
             while (win.IsRunning()) {
                 gameTimer.MeasureTime();
@@ -142,12 +188,7 @@ namespace Galaga_Exercise_2 {
                     win.PollEvents();
                     IterateShots();
                     player.Move();
-                    eventBus.ProcessEvents();
-                    diamants.CreateEnemies(enemyStrides);
-                    
-                    
-                    
-
+                    eventBus.ProcessEvents();                
 
                     //Update game logic here
                 }
@@ -158,13 +199,15 @@ namespace Galaga_Exercise_2 {
 
 
                     player.player.RenderEntity();
+                    
 
                     foreach (PlayerShot shot in playershots) {
                         shot.RenderEntity();
                     }
 
-                    diamants.Enemies.RenderEntities();
-                    
+                    foreach (Enemy enemy in diamants.Enemies) {
+                        enemy.RenderEntity();
+                    }
 
                     explosions.RenderAnimations();
 
@@ -266,88 +309,10 @@ namespace Galaga_Exercise_2 {
 
 
         }
-
-        public EntityContainer<Enemy> Enemies { get; set; }
-        public int MaxEnemies;
-
-        public void CreateEnemy(List<System.Drawing.Image> enemyStrides) {
-            throw new NotSupportedException();
-        }
-
-        public void CreateEnemiesSpoting(List<Image> enemyStrides) {
-            float initValue = 0.1f;
-            Enemies = new EntityContainer<Enemy>(8);
-            for (int i = 0; i < 8; i++) {
-                initValue += 0.1f;
-                enemies.Add(new Enemy(
-                    new DynamicShape(new Vec2F(initValue, 0.9f), new Vec2F(0.1f, 0.1f)),
-                    new ImageStride(80, enemyStrides)));
-            }
-
-            foreach (var elem in enemies) {
-                Enemies.AddStationaryEntity(elem);
-
-            }
-        }
-
-        public void CreatingEnemiesZigZag(List<Image> enemyStrides) {
-            float initValueX = 0.0f;
-            float initValueY = 0.7f;
-
-            Enemies = new EntityContainer<Enemy>(8);
-
-            for (int i = 0; i < 8; i++) {
-                initValueX += 0.1f;
-                initValueY += 0.02f;
-                enemies.Add(new Enemy(
-                    new DynamicShape(new Vec2F(initValueX, initValueY), new Vec2F(0.1f, 0.1f)),
-                    new ImageStride(80, enemyStrides)));
-
-            }
-
-            foreach (var elem in enemies) {
-                Enemies.AddStationaryEntity(elem);
-
-            }
-        }
-
-        public void NoMove() {
-            MovesEnemy(null);
-        }
-
-        public void Down(EntityContainer<Enemy> enemies) {
-            MovingEnemies(enemies);
-        }
-
-        public void ZigZagDown(EntityContainer<Enemy> enemies) {
-            float prevPosY = 0.0f;
-
-            foreach (var enem in enemies) {
-                if (((Enemy) enem).shape.Position.Y - prevPosY > 0.1f) {
-                    MovesEnemy((Enemy) enem);
-                    prevPosY = ((Enemy) enem).shape.Position.Y;
-                }
-            }
-        }
-
-    public void MovesEnemy(Enemy enemy) {
-            float newY = 0.0f;
-            float newX = 0.0f;
-
-            newY = enemy.shape.Position.Y - 0.0003f;
-            newX = (float)((0.5f + 0.05f * Math.Sin(2*Math.PI) * (0.9f - newY)/ 0.045f));
-            
-            enemy.shape.Position = new Vec2F(newX, newY);
-        }
-        public void MovingEnemies(EntityContainer<Enemy> enemies) {
-            foreach (var enem in enemies) {
-                ((Enemy) enem).shape.MoveY(-0.005f);
-                
-            }
-        }
     }
 }
- 
+
+
 
  
     

@@ -8,7 +8,7 @@ using Galaga_Exercise_2.Squadrons;
 namespace Galaga_Exercise_2 {
     public class Diamant : ISquadron {
         public List<Image> enemies;
-        public EntityContainer<Enemy> Enemies { get; }
+        public EntityContainer<Enemy>Enemies { get; set; }
         public int MaxEnemies { get; }
 
         public Diamant() {

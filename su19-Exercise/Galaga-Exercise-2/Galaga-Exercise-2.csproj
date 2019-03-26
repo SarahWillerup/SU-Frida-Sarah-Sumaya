@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Diamant.cs" />
+    <Compile Include="Down.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="MovementStrategy.cs" />
+    <Compile Include="NoMove.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerShot.cs" />
     <Compile Include="Program.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="ISquadrons.cs" />
     <Compile Include="T.cs" />
     <Compile Include="V.cs" />
+    <Compile Include="ZigZagDown.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DIKUArcade\DIKUArcade\DIKUArcade.csproj">

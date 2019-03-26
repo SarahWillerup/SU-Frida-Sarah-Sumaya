@@ -43,7 +43,7 @@ namespace Galaga_Exercise_2 {
         }
 
         public void PlayerShotAdded() {
-            game.playershots.Add(new PlayerShot(game,
+            game.playershots.AddDynamicEntity(new PlayerShot(game,
                 new DynamicShape(new Vec2F(player.Shape.Position.X + player.Shape.Extent.X / 2, 
                     player.Shape.Position.Y + player.Shape.Extent.Y), new Vec2F(0.008f, 0.027f)),
                 game.PlayerShot));
