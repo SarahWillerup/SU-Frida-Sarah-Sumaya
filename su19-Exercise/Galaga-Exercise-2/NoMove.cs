@@ -2,9 +2,10 @@ using System;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using Galaga_Exercise_2.GalagaEntities.Enemy;
+using Galaga_Exercise_2.MovementStrategy;
 
 namespace Galaga_Exercise_2 {
-    public class NoMove {
+    public class NoMove : IMovementStrategy {
         public void MoveEnemy(Enemy enemy) {
             float newY = 0.0f;
             float newX = 0.0f;
@@ -22,7 +23,6 @@ namespace Galaga_Exercise_2 {
 
             }
         }
-
         public void NM() {
             MoveEnemy(null);
         }
