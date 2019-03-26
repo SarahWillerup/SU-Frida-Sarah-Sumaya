@@ -9,6 +9,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Timers;
 using DIKUArcade.Physics;
 using Galaga_Exercise_2.GalagaEntities.Enemy;
+using Galaga_Exercise_2.MovementStrategy;
 using Galaga_Exercise_2.Squadrons;
 
 namespace Galaga_Exercise_2 {
@@ -212,6 +213,7 @@ public void AddEnemies() {
                     explosions.RenderAnimations();
 
                     score.RenderScore();
+                    
 
                     win.SwapBuffers();
 
