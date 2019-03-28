@@ -44,7 +44,14 @@
     <Compile Include="GalagaStates\GameStateType.cs" />
     <Compile Include="GalagaStates\MainMenu.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="ISquadrons.cs" />
+    <Compile Include="ISquadron\Diamant.cs" />
+    <Compile Include="ISquadron\ISquadrons.cs" />
+    <Compile Include="ISquadron\T.cs" />
+    <Compile Include="ISquadron\V.cs" />
+    <Compile Include="MovementStragegy\Down.cs" />
+    <Compile Include="MovementStragegy\MovementStrategy.cs" />
+    <Compile Include="MovementStragegy\NoMove.cs" />
+    <Compile Include="MovementStragegy\ZigZagDown.cs" />
     <Compile Include="MovementStrategy.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerShot.cs" />

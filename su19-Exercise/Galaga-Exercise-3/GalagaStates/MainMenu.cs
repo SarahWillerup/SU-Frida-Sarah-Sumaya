@@ -49,7 +49,6 @@ namespace Galaga_Exercise_3.GalagaStates {
                     activeMenuButton = 0;
                     activeMenuButton = menuButtons[0].SetColor();
                 
-
                 break;
             case "KEY_DOWN":
                 GameEventFactory<object>.CreateGameEventForAllProcessors(
