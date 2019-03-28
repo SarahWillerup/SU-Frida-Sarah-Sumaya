@@ -16,7 +16,7 @@ using Galaga_Exercise_3.Squadrons;
 namespace Galaga_Exercise_3 {
     public class Game : IGameEventProcessor<object> {
         public ISquadron isquadron { get; set; }
-        private Window win;
+        public Window win;
         private DIKUArcade.Timers.GameTimer gameTimer;
         private Player player;
         private GameEventBus<object> eventBus;
@@ -34,6 +34,7 @@ namespace Galaga_Exercise_3 {
         public ZigZagDown zigzagdown;
         public Down down;
         public NoMove nomove;
+        public StateMachine statemachine;
 
 
         public Game() {
@@ -201,6 +202,8 @@ public void AddEnemies() {
                 gameTimer.MeasureTime();
                 while (gameTimer.ShouldUpdate()) {
                     win.PollEvents();
+                    GalagaBus.GetBus().ProcessEvents();
+                    statemachine.ActiveState.UpdateGameLogic();
                     IterateShots();
                     player.Move();
                     eventBus.ProcessEvents();                
@@ -210,6 +213,8 @@ public void AddEnemies() {
 
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
+                    statemachine.ActiveState.RenderState();
+                    win.SwapBuffers();
                     // Render gameplay entities here
 
 
@@ -230,7 +235,6 @@ public void AddEnemies() {
                     
                     zigzagdown.MoveEnemies(enemies);
 
-                    win.SwapBuffers();
 
                 }
 

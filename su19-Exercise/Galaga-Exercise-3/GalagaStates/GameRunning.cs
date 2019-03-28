@@ -72,7 +72,7 @@ namespace Galaga_Exercise_3.GalagaStates {
                         AddExplosion(e.Shape.Position.X - 0.05f,
                             e.Shape.Position.Y - 0.05f, 0.2f,
                             0.2f); //e.Shape.Extent.X, e.Shape.Extent.Y);
-                        score.AddPoint();
+                        score.Addpoint();
                     }
                 }
             }
@@ -175,9 +175,9 @@ namespace Galaga_Exercise_3.GalagaStates {
         public void InitializeGameState() {
             stateMachine = new StateMachine();
             stateMachine.ActiveState.RenderState();
-            player = new Player(this,
-                shape: new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                image: new Image(Path.Combine("Assets", "Images", "Player.png")));
+            player = new Player( new Game (), 
+                new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                new Image(Path.Combine("Assets", "Images", "Player.png")));
 
             //win = new Window("WindowName", 500, 500);
             //gameTimer = new GameTimer(50, 50);

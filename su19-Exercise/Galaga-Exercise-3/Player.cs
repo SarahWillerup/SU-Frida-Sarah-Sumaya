@@ -31,7 +31,7 @@ namespace Galaga_Exercise_3 {
 
         }
 
-        private void Direction(Vec2F v1) {
+        public void Direction(Vec2F v1) {
             player.Shape.AsDynamicShape().Direction = v1;
         }
 
