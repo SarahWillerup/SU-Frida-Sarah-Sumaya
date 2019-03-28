@@ -1,12 +1,12 @@
-using System;
 using System.Drawing;
 using System.IO;
+using System;
 using DIKUArcade;
 using DIKUArcade.Entities;
-using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.State;
+using DIKUArcade.EventBus;
 using Image = DIKUArcade.Graphics.Image;
 
 
@@ -16,70 +16,77 @@ namespace Galaga_Exercise_3.GalagaStates {
 
         private Entity backGroundImage;
         private Text[] menuButtons;
+        private Text newGameButton, quitButton;
         private int activeMenuButton;
         private int maxMenuButtons;
 
+        public MainMenu() {
+            InitializeGameState();
+        }
         public static MainMenu GetInstance() {
             return MainMenu.instance ?? (MainMenu.instance = new MainMenu());
         }
 
         public void RenderState() {
-            backGroundImage = new Entity(
-                new StationaryShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.1f, 1.1f)),
-                new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
-            menuButtons = new[] {
-                new Text("NEW_GAME", new Vec2F(0.5f, 0.5f), new Vec2F(0.5f, 0.5f)),
-                new Text("QUIT", new Vec2F(0.3f, 0.3f), new Vec2F(0.3f, 0.3f))
-            };
-
-
-
+            backGroundImage.RenderEntity();
+            foreach (var button in menuButtons) {
+                button.RenderText();
+            }
         }
 
-        public void GameLoop() { }
+        public void GameLoop() {}
 
-        public void InitializeGameState() { }
-
-        public void UpdateGameLogic() { }
+        public void InitializeGameState() {
+            backGroundImage =
+                new Entity(new StationaryShape(new Vec2F(0.0f, 1.0f), new Vec2F(1.0f, 1.0f)),
+                    new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
+            
+            menuButtons = new[]
+            {
+                newGameButton = new Text("New Game", new Vec2F(0.1f, 0.2f), new Vec2F(0.2f, 0.3f)),
+                quitButton = new Text("Quit", new Vec2F(0.1f, 0.2f), new Vec2F(0.2f, 0.3f))
+            };
+            maxMenuButtons = menuButtons.Length;
+        }
+        
+        public void UpdateGameLogic() {}
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
             if (keyAction == "KEY_PRESS") {
                 switch (keyValue) {
-                case "KEY_UP":
-                    activeMenuButton = 0;
-                    activeMenuButton = menuButtons[0].SetColor();
-                
-                break;
-            case "KEY_DOWN":
-                GameEventFactory<object>.CreateGameEventForAllProcessors(
-                    GameEventType.GameStateEvent,
-                    this, "KEY_DOWN", "", "");
-                break;
-            case "KEY_ENTER":
-                GameEventFactory<object>.CreateGameEventForAllProcessors(
-                    GameEventType.GameStateEvent,
-                    this, "KEY_ENTER", "NEW_GAME", "QUIT");
-                if (keyAction == "NEW_GAME") {
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.GameStateEvent,
-                        this,
-                        "CHANGE_STATE",
-                        "GAME_RUNNING", "");
-                    
-                } else if (keyAction == "QUIT") {
-                    GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        GameEventType.WindowEvent,
-                        this,
-                        "CLOSE_WINDOW",
-                        "", ""); 
+                    case "KEY_UP":
+                        activeMenuButton = Math.Max(activeMenuButton-1, 0);
+                        menuButtons[activeMenuButton].SetColor((new Vec3F(0.3f, 0.4f, 0.1f)));
+                        break;
+                    case "KEY_DOWN":
+                        activeMenuButton = Math.Min(activeMenuButton+1, maxMenuButtons);
+                        menuButtons[activeMenuButton].SetColor((new Vec3F(0.3f, 0.4f, 0.1f)));
+                        break;
+                    case "KEY_ENTER":
+                        if (menuButtons[activeMenuButton].Equals(newGameButton)) {
+                            GameEventFactory<object>.CreateGameEventForAllProcessors(
+                                GameEventType.GameStateEvent,
+                                this,
+                                "CHANGE_STATE",
+                                "GAME_RUNNING", "");
+                        }
+                        if (menuButtons[activeMenuButton].Equals(quitButton)) {
+                            GameEventFactory<object>.CreateGameEventForAllProcessors(
+                                GameEventType.WindowEvent,
+                                this,
+                                "CLOSE WINDOW", "","");
+                        }
+                        break;
                 }
-                break;
-                default:
-                break;
+                
             }
-
-            }
-
+            /*switch (keyAction = "KEY_PRESS") {
+            case "KEY_UP":
+                activeMenuButton.
+                break; 
+            case ""
+                
+            }*/
         }
     }
 }

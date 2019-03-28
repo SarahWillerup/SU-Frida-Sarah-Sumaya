@@ -1,54 +1,48 @@
 using System;
-using System.ComponentModel;
 
-namespace Galaga_Exercise_3 {
-    public enum GameStateType {
-    GameRunning,
-    GamePaused,
-    MainMenu,
-
-    }
-
-    public class StateTransformer {
-
-        public static GameStateType TransformStringToState(string state) {
-            switch (state) {
-            case "GAME_RUNNING":
-                return GameStateType.GameRunning;
-                break;
-            case "GAME_PAUSED":
-                return GameStateType.GamePaused;
-                break;
-            case "MAIN_MENU":
-                return GameStateType.MainMenu;
-                break;
-            default:
-                throw new ArgumentException("INVALID_ARGUMENT");
-                break;
-            }
-
+namespace Galaga_Exercise_3.GalagaStates {
+    public class GameStateType {
+        public enum Enum_GameStateType {
+            MainMenu, 
+            GameRunning, 
+            GamePaused, 
+            Terminated
         }
 
+        public class StateTransformer {
+            //public static Enum_GameStateType emum_GameStateType;
+            //readonly Enum_GameStateType enum_GameStateType;
 
-        public static string TransformStatetoString(GameStateType state) {
-            switch (state) {
-            case GameStateType.GameRunning:
-                return "GAME_RUNNING";
-                break;
-            case GameStateType.GamePaused:
-                return "GAME_PAUSED";
-                break;
-            case GameStateType.MainMenu:
-                return "MAIN_MENU";
-                break;
-            default:
-                throw new ArgumentException("INVALID_ARGUMENT");
-                break;
+            public static Enum_GameStateType TransformStringToState(string state) {
+                switch (state) {
+                case "GAME_RUNNING":
+                    return Enum_GameStateType.GameRunning;
+                case "GAME_PAUSED":
+                    return Enum_GameStateType.GamePaused;
+                case "MAIN_MENU":
+                    return Enum_GameStateType.MainMenu;
+                default:
+                    throw new ArgumentException();
+                }
             }
 
+
+            public static string TransformStateToString(Enum_GameStateType state) {
+                switch (state) {
+                case Enum_GameStateType.GameRunning:
+                    return "GAME_RUNNING";
+                case Enum_GameStateType.GamePaused:
+                    return "GAME_PAUSED";
+                case Enum_GameStateType.MainMenu:
+                    return "MAIN_MENU";
+                default:
+                    throw new ArgumentException();
+                }
+            }
         }
     }
+
+
 }
-
     
 
