@@ -27,29 +27,31 @@ namespace Galaga_Exercise_3.GalagaStates {
             return MainMenu.instance ?? (MainMenu.instance = new MainMenu());
         }
 
-        public void RenderState() {
-            backGroundImage.RenderEntity();
-            foreach (var button in menuButtons) {
-                button.RenderText();
-            }
-        }
+        
 
         public void GameLoop() {}
 
-        public void InitializeGameState() {
-            backGroundImage =
-                new Entity(new StationaryShape(new Vec2F(0.0f, 1.0f), new Vec2F(1.0f, 1.0f)),
-                    new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
-            
-            menuButtons = new[]
-            {
-                newGameButton = new Text("New Game", new Vec2F(0.1f, 0.2f), new Vec2F(0.2f, 0.3f)),
-                quitButton = new Text("Quit", new Vec2F(0.1f, 0.2f), new Vec2F(0.2f, 0.3f))
-            };
-            maxMenuButtons = menuButtons.Length;
-        }
+        public void InitializeGameState() {}
         
         public void UpdateGameLogic() {}
+
+        public void RenderState() {
+                backGroundImage =
+                    new Entity(new StationaryShape(new Vec2F(0.0f, 1.0f), new Vec2F(1.0f, 1.0f)),
+                        new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
+            
+                menuButtons = new[]
+                {
+                    newGameButton = new Text("New Game", new Vec2F(0.1f, 0.2f), new Vec2F(0.2f, 0.3f)),
+                    quitButton = new Text("Quit", new Vec2F(0.1f, 0.2f), new Vec2F(0.2f, 0.3f))
+                };
+                maxMenuButtons = menuButtons.Length;
+                backGroundImage.RenderEntity();
+                foreach (var button in menuButtons) {
+                    button.RenderText();
+                }
+            
+        }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
             if (keyAction == "KEY_PRESS") {

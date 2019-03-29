@@ -97,7 +97,7 @@ namespace Galaga_Exercise_3.GalagaStates {
             }
         }
 
-        /*       public void GameLoop() {
+              public void GameLoop() {
                    while (game.win.IsRunning()) {
                        while (game.gameTimer.ShouldUpdate()) {
                            IterateShots();
@@ -109,13 +109,13 @@ namespace Galaga_Exercise_3.GalagaStates {
        
                        if (game.gameTimer.ShouldRender()) {
                           player.player.RenderEntity();
-                           foreach (PlayerShot shot in playerShots) {shot.RenderEntity();}
+                           foreach (PlayerShot shot in playershots) {shot.RenderEntity();}
                            enemies.RenderEntities();
                            explosions.RenderAnimations();
                            score.RenderScore();
                            }
                     }
-               }*/
+               }
 
         private void KeyPress(string key) {
             switch (key) {
@@ -167,10 +167,6 @@ namespace Galaga_Exercise_3.GalagaStates {
 
         }
 
-
-        public void GameLoop() {
-            throw new System.NotImplementedException();
-        }
 
         public void InitializeGameState() {
             stateMachine = new StateMachine();

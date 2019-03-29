@@ -9,6 +9,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Timers;
 using DIKUArcade.Physics;
 using Galaga_Exercise_3.GalagaEntities.Enemy;
+using Galaga_Exercise_3.GalagaStates;
 using Galaga_Exercise_3.Galaga_Exercise_3.MovementStrategy;
 using Galaga_Exercise_3.MovementStrategy;
 using Galaga_Exercise_3.Squadrons;
@@ -17,7 +18,7 @@ namespace Galaga_Exercise_3 {
     public class Game : IGameEventProcessor<object> {
         public ISquadron isquadron { get; set; }
         public Window win;
-        private DIKUArcade.Timers.GameTimer gameTimer;
+        public DIKUArcade.Timers.GameTimer gameTimer;
         private Player player;
         private GameEventBus<object> eventBus;
         public List<Image> enemyStrides;
@@ -35,6 +36,7 @@ namespace Galaga_Exercise_3 {
         public Down down;
         public NoMove nomove;
         public StateMachine statemachine;
+        public MainMenu mainmenu;
 
 
         public Game() {
@@ -176,6 +178,7 @@ public void AddEnemies() {
 
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
+                    mainmenu.RenderState();
                     statemachine.ActiveState.RenderState();
                     win.SwapBuffers();
                     // Render gameplay entities here
@@ -191,12 +194,17 @@ public void AddEnemies() {
                     foreach (Enemy enemy in diamants.Enemies) {
                         enemy.RenderEntity();
                     }
+                 
 
                     explosions.RenderAnimations();
+                    
+                    
 
                     score.RenderScore();
                     
                     zigzagdown.MoveEnemies(enemies);
+                    
+                    
 
 
                 }
