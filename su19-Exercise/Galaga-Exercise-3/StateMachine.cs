@@ -6,11 +6,13 @@ using Galaga_Exercise_3.GalagaStates;
 
 namespace Galaga_Exercise_3 {
     public class StateMachine : IGameEventProcessor<object> {
+        public MainMenu mainmenu;
         public IGameState ActiveState { get; private set; }
         public StateMachine() {
             GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
             GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             ActiveState = MainMenu.GetInstance();
+            
         }
         private void SwitchState(GameStateType.Enum_GameStateType stateType) {
             switch (stateType) {
@@ -29,7 +31,7 @@ namespace Galaga_Exercise_3 {
 
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.GameStateEvent) {
-                switch (gameEvent.Message) {
+                switch (gameEvent.Message) {  
                 case "KEY_PAUSE":
                     if (eventType == (GameEventType) GameStateType.Enum_GameStateType.GamePaused) {
                         SwitchState(GameStateType.Enum_GameStateType.GameRunning);

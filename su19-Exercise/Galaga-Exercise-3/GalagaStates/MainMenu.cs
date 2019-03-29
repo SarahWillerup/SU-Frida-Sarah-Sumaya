@@ -49,8 +49,9 @@ namespace Galaga_Exercise_3.GalagaStates {
         public void GameLoop() {}
 
         public void InitializeGameState() {}
-        
-        public void UpdateGameLogic() {}
+
+        public void UpdateGameLogic() {
+        }
 
         public void RenderState() {
                
@@ -74,29 +75,24 @@ namespace Galaga_Exercise_3.GalagaStates {
                         break;
                     case "KEY_ENTER":
                         if (menuButtons[activeMenuButton].Equals(newGameButton)) {
+                            GalagaBus.GetBus().RegisterEvent(
                             GameEventFactory<object>.CreateGameEventForAllProcessors(
                                 GameEventType.GameStateEvent,
                                 this,
                                 "CHANGE_STATE",
-                                "GAME_RUNNING", "");
+                                "GAME_RUNNING", ""));
                         }
                         if (menuButtons[activeMenuButton].Equals(quitButton)) {
+                            GalagaBus.GetBus().RegisterEvent(
                             GameEventFactory<object>.CreateGameEventForAllProcessors(
                                 GameEventType.WindowEvent,
                                 this,
-                                "CLOSE WINDOW", "","");
+                                "CLOSE WINDOW", "",""));
                         }
                         break;
                 }
                 
             }
-            /*switch (keyAction = "KEY_PRESS") {
-            case "KEY_UP":
-                activeMenuButton.
-                break; 
-            case ""
-                
-            }*/
         }
     }
 }
