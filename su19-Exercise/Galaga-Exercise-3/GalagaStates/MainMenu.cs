@@ -22,6 +22,23 @@ namespace Galaga_Exercise_3.GalagaStates {
 
         public MainMenu() {
             InitializeGameState();
+            
+            backGroundImage =
+                new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)),
+                    new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
+            
+            menuButtons = new[]
+            {
+                newGameButton = new Text("New Game", new Vec2F(0.38f, 0.2f), new Vec2F(0.3f, 0.4f)),
+                quitButton = new Text("Quit", new Vec2F(0.45f, 0.1f), new Vec2F(0.3f, 0.4f))
+            };
+            maxMenuButtons = menuButtons.Length;
+            
+            foreach (var button in menuButtons) {
+                button.SetColor(new Vec3F(0f,0f,1f));
+                //newGameButton.SetColor(new Vec3F(255f,255f,255f));
+                //quitButton.SetColor(new Vec3F(255f,255f,255f));
+            }
         }
         public static MainMenu GetInstance() {
             return MainMenu.instance ?? (MainMenu.instance = new MainMenu());
@@ -36,20 +53,10 @@ namespace Galaga_Exercise_3.GalagaStates {
         public void UpdateGameLogic() {}
 
         public void RenderState() {
-                backGroundImage =
-                    new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)),
-                        new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
-            
-                menuButtons = new[]
-                {
-                    newGameButton = new Text("New Game", new Vec2F(0.4f, 0.3f), new Vec2F(0.2f, 0.3f)),
-                    quitButton = new Text("Quit", new Vec2F(0.45f, 0.2f), new Vec2F(0.2f, 0.3f))
-                };
-                maxMenuButtons = menuButtons.Length;
+               
                 backGroundImage.RenderEntity();
                 foreach (var button in menuButtons) {
-                    newGameButton.SetColor(new Vec3F(0.255f, 0.255f, 0.255f));
-                    quitButton.SetColor(new Vec3F(0.255f, 0.255f, 0.255f));
+                    button.RenderText();
                 }
             
         }
