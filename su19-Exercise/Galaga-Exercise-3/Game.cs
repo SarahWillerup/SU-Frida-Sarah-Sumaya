@@ -117,17 +117,6 @@ namespace Galaga_Exercise_3 {
  
                 } }
         }
-        
-
-
-
-
-        public void AddExplosion(float posX, float posY, float extentX, float extentY) {
-            explosions.AddAnimation(
-                new StationaryShape(posX, posY, extentX, extentY), explosionLength,
-                new ImageStride(explosionLength / 8, explosionStrides));
-
-        }
 
         public void KeyPress(string key) {
             switch (key) {

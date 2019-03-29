@@ -35,6 +35,7 @@ namespace Galaga_Exercise_3.GalagaStates {
         public IMovementStrategy movementStrategy;
         public Down down;
         public ZigZagDown zigzagdown;
+        public NoMove nomove;
 
         private Score score;
 
@@ -52,6 +53,7 @@ namespace Galaga_Exercise_3.GalagaStates {
         public GameRunning() {
             InitializeGameState();
         }
+        public void GameLoop() {}
 
         public void AddExplosion(float posX, float posY, float extentX, float extentY) {
             explosions.AddAnimation(
@@ -98,51 +100,7 @@ namespace Galaga_Exercise_3.GalagaStates {
             }
         }
 
-        public void GameLoop() {
-            while (game.win.IsRunning()) {
-                while (game.gameTimer.ShouldUpdate()) {
-                    IterateShots();
-                    player.Move();
-                    zigzagdown.MoveEnemies(enemies);
-                    GalagaBus.GetBus().ProcessEvents();
-
-                }
-
-                if (game.gameTimer.ShouldRender()) {
-                    player.player.RenderEntity();
-                    foreach (PlayerShot shot in playershots) {
-                        shot.RenderEntity();
-                    }
-
-                    enemies.RenderEntities();
-                    explosions.RenderAnimations();
-                    score.RenderScore();
-                }
-
-                player.player.RenderEntity();
-
-
-                foreach (PlayerShot shot in playershots) {
-                    shot.RenderEntity();
-                }
-
-                foreach (Enemy enemy in diamants.Enemies) {
-                    enemy.RenderEntity();
-                }
-
-
-                explosions.RenderAnimations();
-
-
-
-                score.RenderScore();
-
-                zigzagdown.MoveEnemies(enemies);
-
-
-            }
-
-        }
+        
     
 
 
@@ -189,30 +147,16 @@ private void KeyPress(string key) {
 
         public void InitializeGameState() {
             stateMachine = new StateMachine();
-            stateMachine.ActiveState.RenderState();
-            player = new Player( new Game (), 
-                new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "Player.png")));
+            player = new Player(new Game(), 
+                shape: new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                image: new Image(Path.Combine("Assets", "Images", "Player.png")));
 
-            //win = new Window("WindowName", 500, 500);
-            //gameTimer = new GameTimer(50, 50);
-
-
-
-            gameEventBus = new GameEventBus<object>();
             GalagaBus.GetBus().InitializeEventBus(new List<GameEventType>() {
-                GameEventType.InputEvent, // key press / key release
-                GameEventType.WindowEvent, // messages to the window
-                GameEventType.PlayerEvent,
-                GameEventType.GameStateEvent,
+                GameEventType.PlayerEvent
             });
 
-            game.win.RegisterEventBus(GalagaBus.GetBus());
-            GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, game);
-            //GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, game);
-            //GalagaBus.GetBus().Subscribe(GameEventType.WindowEvent, game);
+            GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
 
-            EntityContainer<Enemy> enemyContainer = new EntityContainer<Enemy>();
             enemyStrides =
                 ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             enemies = new EntityContainer<Enemy>();
@@ -228,17 +172,21 @@ private void KeyPress(string key) {
 
             diamants = new Diamant();
             diamants.CreateEnemies(enemyStrides);
-            enemies = diamants.enemies;
+            enemies = diamants.Enemies;
 
             down = new Down();
             zigzagdown = new ZigZagDown();
+            nomove = new NoMove();
         }
 
         public void UpdateGameLogic() {
             IterateShots();
             player.Move();
             zigzagdown.MoveEnemies(enemies);
-            GalagaBus.GetBus().ProcessEvents();
+            
+
+
+            
         }
 
         public void RenderState() {
