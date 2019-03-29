@@ -121,44 +121,7 @@ public void AddEnemies() {
                 new ImageStride(80, enemyStrides)));
         }
 */
-        public void IterateShots() {
-            foreach (PlayerShot shot in playershots) {
-                shot.Shape.Move();
-                if (shot.Shape.Position.Y > 1.0f) {
-                    shot.DeleteEntity();
-                }
-
-                foreach (Enemy enemy in diamants.Enemies) {
-                    if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape)
-                        .Collision) {
-                        enemy.DeleteEntity();
-                        shot.DeleteEntity();
-                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y, 0.1f, 0.1f);
-                        score.Addpoint();
-                    }
-
-                }
-
-               EntityContainer<Enemy> newEnemies = new EntityContainer<Enemy>();
-                foreach (Enemy enemy in diamants.Enemies) {
-                    if (!enemy.IsDeleted()) {
-                        newEnemies.AddDynamicEntity(enemy);
-                    }
-                }
-
-                 diamants.Enemies = newEnemies;
-                 
-
-                EntityContainer<PlayerShot> newPlayershots = new EntityContainer<PlayerShot>();
-                foreach (PlayerShot playershot in playershots) {
-                    if (!playershot.IsDeleted()) {
-                        newPlayershots.AddDynamicEntity(playershot);
-                    }
-                }
-
-               playershots = newPlayershots;
-            }
-        }
+        
         /*
         public void IterateShots() {
             playershots.Iterate(delegate(PlayerShot shot) {
@@ -204,7 +167,7 @@ public void AddEnemies() {
                     win.PollEvents();
                     GalagaBus.GetBus().ProcessEvents();
                     statemachine.ActiveState.UpdateGameLogic();
-                    IterateShots();
+                 
                     player.Move();
                     eventBus.ProcessEvents();                
 

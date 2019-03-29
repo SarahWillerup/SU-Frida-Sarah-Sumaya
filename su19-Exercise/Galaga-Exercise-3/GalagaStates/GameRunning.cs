@@ -20,7 +20,7 @@ namespace Galaga_Exercise_3.GalagaStates {
 
         private Player player;
 
-        public EntityContainer<PlayerShot> playerShots { get; private set; }
+        public EntityContainer<PlayerShot> playershots { get; private set; }
         public Image PlayerShot;
 
         private List<Image> explosionStrides;
@@ -30,7 +30,7 @@ namespace Galaga_Exercise_3.GalagaStates {
         private List<Image> enemyStrides;
         private EntityContainer<Enemy> enemies;
         public ISquadron iSquadron { get; set; }
-        public Diamant Diamant;
+        public Diamant diamants;
         public IMovementStrategy movementStrategy;
         public Down down;
         public ZigZagDown zigzagdown;
@@ -59,43 +59,43 @@ namespace Galaga_Exercise_3.GalagaStates {
         }
 
         public void IterateShots() {
-            foreach (PlayerShot shot in playerShots) {
+            foreach (PlayerShot shot in playershots) {
                 shot.Shape.Move();
                 if (shot.Shape.Position.Y > 1.0f) {
                     shot.DeleteEntity();
                 }
 
-                foreach (Enemy e in enemies) {
-                    if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), e.Shape).Collision) {
-                        e.DeleteEntity();
+                foreach (Enemy enemy in diamants.Enemies) {
+                    if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape)
+                        .Collision) {
+                        enemy.DeleteEntity();
                         shot.DeleteEntity();
-                        AddExplosion(e.Shape.Position.X - 0.05f,
-                            e.Shape.Position.Y - 0.05f, 0.2f,
-                            0.2f); //e.Shape.Extent.X, e.Shape.Extent.Y);
+                        AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y, 0.1f, 0.1f);
                         score.Addpoint();
                     }
+
                 }
-            }
 
-            EntityContainer<Enemy> newEnemies = new EntityContainer<Enemy>();
-            foreach (Enemy e in enemies) {
-                if (!e.IsDeleted()) {
-                    newEnemies.AddDynamicEntity(e);
+                EntityContainer<Enemy> newEnemies = new EntityContainer<Enemy>();
+                foreach (Enemy enemy in diamants.Enemies) {
+                    if (!enemy.IsDeleted()) {
+                        newEnemies.AddDynamicEntity(enemy);
+                    }
                 }
-            }
 
-            enemies = newEnemies;
+                diamants.Enemies = newEnemies;
+                 
 
-            EntityContainer<PlayerShot> newPlayerShots = new EntityContainer<PlayerShot>();
-            foreach (PlayerShot shot in playerShots) {
-                if (!shot.IsDeleted()) {
-                    newPlayerShots.AddDynamicEntity(shot);
+                EntityContainer<PlayerShot> newPlayershots = new EntityContainer<PlayerShot>();
+                foreach (PlayerShot playershot in playershots) {
+                    if (!playershot.IsDeleted()) {
+                        newPlayershots.AddDynamicEntity(playershot);
+                    }
                 }
-            }
 
-            playerShots = newPlayerShots;
+                playershots = newPlayershots;
+            }
         }
-
 
         /*       public void GameLoop() {
                    while (game.win.IsRunning()) {
@@ -203,7 +203,7 @@ namespace Galaga_Exercise_3.GalagaStates {
             enemies = new EntityContainer<Enemy>();
 
             PlayerShot = new Image(Path.Combine("Assets", "Images", "BlueMonster.png"));
-            playerShots = new EntityContainer<PlayerShot>();
+            playershots = new EntityContainer<PlayerShot>();
 
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
@@ -211,9 +211,9 @@ namespace Galaga_Exercise_3.GalagaStates {
 
             score = new Score(new Vec2F(0.43f, -0.12f), new Vec2F(0.2f, 0.2f));
 
-            Diamant = new Diamant();
-            Diamant.CreateEnemies(enemyStrides);
-            enemies = Diamant.Enemies;
+            diamants = new Diamant();
+            diamants.CreateEnemies(enemyStrides);
+            enemies = diamants.enemies;
 
             down = new Down();
             zigzagdown = new ZigZagDown();
@@ -228,7 +228,7 @@ namespace Galaga_Exercise_3.GalagaStates {
 
         public void RenderState() {
             player.player.RenderEntity();
-            foreach (PlayerShot shot in playerShots) {
+            foreach (PlayerShot shot in playershots) {
                 shot.RenderEntity();
             }
 
