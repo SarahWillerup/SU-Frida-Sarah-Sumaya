@@ -48,7 +48,8 @@ namespace Galaga_Exercise_3.GalagaStates {
                 maxMenuButtons = menuButtons.Length;
                 backGroundImage.RenderEntity();
                 foreach (var button in menuButtons) {
-                    button.RenderText();
+                    newGameButton.SetColor(new Vec3F(0.255f, 0.255f, 0.255f));
+                    quitButton.SetColor(new Vec3F(0.255f, 0.255f, 0.255f));
                 }
             
         }
