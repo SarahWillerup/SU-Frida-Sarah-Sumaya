@@ -19,7 +19,8 @@ namespace Galaga_Exercise_3.GalagaStates {
         private GameEventBus<object> gameEventBus;
 
         private Player player;
-
+        public Window win;
+        public DIKUArcade.Timers.GameTimer gameTimer;
         public EntityContainer<PlayerShot> playershots { get; private set; }
         public Image PlayerShot;
 
@@ -84,7 +85,7 @@ namespace Galaga_Exercise_3.GalagaStates {
                 }
 
                 diamants.Enemies = newEnemies;
-                 
+
 
                 EntityContainer<PlayerShot> newPlayershots = new EntityContainer<PlayerShot>();
                 foreach (PlayerShot playershot in playershots) {
@@ -97,27 +98,58 @@ namespace Galaga_Exercise_3.GalagaStates {
             }
         }
 
-              public void GameLoop() {
-                   while (game.win.IsRunning()) {
-                       while (game.gameTimer.ShouldUpdate()) {
-                           IterateShots();
-                           player.Move();
-                           zigzagdown.MoveEnemies(enemies);
-                           GalagaBus.GetBus().ProcessEvents();
-                   
-                       }
-       
-                       if (game.gameTimer.ShouldRender()) {
-                          player.player.RenderEntity();
-                           foreach (PlayerShot shot in playershots) {shot.RenderEntity();}
-                           enemies.RenderEntities();
-                           explosions.RenderAnimations();
-                           score.RenderScore();
-                           }
-                    }
-               }
+        public void GameLoop() {
+            while (game.win.IsRunning()) {
+                while (game.gameTimer.ShouldUpdate()) {
+                    IterateShots();
+                    player.Move();
+                    zigzagdown.MoveEnemies(enemies);
+                    GalagaBus.GetBus().ProcessEvents();
 
-        private void KeyPress(string key) {
+                }
+
+                if (game.gameTimer.ShouldRender()) {
+                    player.player.RenderEntity();
+                    foreach (PlayerShot shot in playershots) {
+                        shot.RenderEntity();
+                    }
+
+                    enemies.RenderEntities();
+                    explosions.RenderAnimations();
+                    score.RenderScore();
+                }
+
+                player.player.RenderEntity();
+
+
+                foreach (PlayerShot shot in playershots) {
+                    shot.RenderEntity();
+                }
+
+                foreach (Enemy enemy in diamants.Enemies) {
+                    enemy.RenderEntity();
+                }
+
+
+                explosions.RenderAnimations();
+
+
+
+                score.RenderScore();
+
+                zigzagdown.MoveEnemies(enemies);
+
+
+            }
+
+        }
+    
+
+
+
+
+
+private void KeyPress(string key) {
             switch (key) {
             case "KEY_LEFT":
                 player.Direction(new Vec2F(-0.01f, 0.0f));
@@ -238,7 +270,6 @@ namespace Galaga_Exercise_3.GalagaStates {
             // public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
                 //   throw new System.NotImplementedException();
                 //}
-            
+            }
         
     }
-}

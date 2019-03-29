@@ -87,6 +87,8 @@ namespace Galaga_Exercise_3 {
             }
             
             zigzagdown = new ZigZagDown();
+            statemachine = new StateMachine();
+            mainmenu = new MainMenu();
             
             zigzagdown.MoveEnemies(enemies);
 
@@ -95,73 +97,7 @@ namespace Galaga_Exercise_3 {
             }
         }
 
-/*
-public void AddEnemies() {
-            enemies.AddD(new Enemy(
-                new DynamicShape(new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, enemyStrides)));
-            enemies.Add(new Enemy(
-                new DynamicShape(new Vec2F(0.2f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, enemyStrides)));
-            enemies.Add(new Enemy(
-                new DynamicShape(new Vec2F(0.3f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, enemyStrides)));
-            enemies.Add(new Enemy(
-                new DynamicShape(new Vec2F(0.4f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, enemyStrides)));
-            enemies.Add(new Enemy(
-                new DynamicShape(new Vec2F(0.5f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, enemyStrides)));
-            enemies.Add(new Enemy(
-                new DynamicShape(new Vec2F(0.6f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, enemyStrides)));
-            enemies.Add(new Enemy(
-                new DynamicShape(new Vec2F(0.7f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, enemyStrides)));
-            enemies.Add(new Enemy(
-                new DynamicShape(new Vec2F(0.8f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, enemyStrides)));
-        }
-*/
-        
-        /*
-        public void IterateShots() {
-            playershots.Iterate(delegate(PlayerShot shot) {
-                if (shot.Shape.Position.Y > 1.0f) {
-                    shot.DeleteEntity();
-                } else {
-                    foreach (Enemy enemy in enemies) {
-                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape)
-                            .Collision) {
-                            enemy.DeleteEntity();
-                            shot.DeleteEntity();
-                            AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y, 0.1f,
-                                0.1f);
-                            score.Addpoint();
-                        
-                    
 
-                    EntityContainer<Enemy> newEnemies = new EntityContainer<Enemy>();
-                            foreach (Enemy e in enemies) {
-                                if (!e.IsDeleted()) {
-                                    newEnemies.AddDynamicEntity(e);
-                                }
-                            }
-
-                            AddExplosion(enemy.Shape.Position.X, enemy.Shape.Position.Y,
-                                enemy.Shape.Extent.X, enemy.Shape.Extent.Y);
-                            enemy.DeleteEntity();
-                            shot.DeleteEntity();   
-                        }
-                    }
-
-                    if (!shot.IsDeleted()) {
-                        shot.Shape.Move();
-                    }
-                }
-            });
-        }
-        */
         public void GameLoop() {
             while (win.IsRunning()) {
                 gameTimer.MeasureTime();
@@ -169,53 +105,20 @@ public void AddEnemies() {
                     win.PollEvents();
                     GalagaBus.GetBus().ProcessEvents();
                     statemachine.ActiveState.UpdateGameLogic();
-                 
-                    player.Move();
-                    eventBus.ProcessEvents();                
-
-                    //Update game logic here
                 }
-
                 if (gameTimer.ShouldRender()) {
                     win.Clear();
-                    mainmenu.RenderState();
                     statemachine.ActiveState.RenderState();
                     win.SwapBuffers();
-                    // Render gameplay entities here
-
-
-                    player.player.RenderEntity();
-                    
-
-                    foreach (PlayerShot shot in playershots) {
-                        shot.RenderEntity();
-                    }
-
-                    foreach (Enemy enemy in diamants.Enemies) {
-                        enemy.RenderEntity();
-                    }
-                 
-
-                    explosions.RenderAnimations();
-                    
-                    
-
-                    score.RenderScore();
-                    
-                    zigzagdown.MoveEnemies(enemies);
-                    
-                    
-
-
                 }
-
                 if (gameTimer.ShouldReset()) {
-                    // 1 second has passed - display last captured ups and fps
-                    win.Title = "Galaga | UPS:" + gameTimer.CapturedUpdates + ", FPS: " +
-                                gameTimer.CapturedFrames;
-                }
-            }
+// could display something, 1 second has passed
+ 
+                } }
         }
+        
+
+
 
 
         public void AddExplosion(float posX, float posY, float extentX, float extentY) {
