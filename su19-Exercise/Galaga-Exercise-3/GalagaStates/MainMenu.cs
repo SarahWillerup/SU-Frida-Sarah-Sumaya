@@ -42,8 +42,8 @@ namespace Galaga_Exercise_3.GalagaStates {
             
                 menuButtons = new[]
                 {
-                    newGameButton = new Text("New Game", new Vec2F(0.1f, 0.2f), new Vec2F(0.2f, 0.3f)),
-                    quitButton = new Text("Quit", new Vec2F(0.1f, 0.2f), new Vec2F(0.2f, 0.3f))
+                    newGameButton = new Text("New Game", new Vec2F(0.4f, 0.3f), new Vec2F(0.2f, 0.3f)),
+                    quitButton = new Text("Quit", new Vec2F(0.45f, 0.2f), new Vec2F(0.2f, 0.3f))
                 };
                 maxMenuButtons = menuButtons.Length;
                 backGroundImage.RenderEntity();
