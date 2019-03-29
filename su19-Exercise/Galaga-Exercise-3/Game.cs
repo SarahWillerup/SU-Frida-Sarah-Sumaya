@@ -112,7 +112,8 @@ namespace Galaga_Exercise_3 {
                     win.SwapBuffers();
                 }
                 if (gameTimer.ShouldReset()) {
-// could display something, 1 second has passed
+                    win.Title = "Galaga | UPS:" + gameTimer.CapturedUpdates + ", FPS: " +
+                    gameTimer.CapturedFrames;
  
                 } }
         }

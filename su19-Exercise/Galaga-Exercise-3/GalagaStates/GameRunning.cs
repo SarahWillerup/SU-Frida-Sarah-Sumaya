@@ -184,20 +184,7 @@ private void KeyPress(string key) {
             }
         }
 
-        public void ProcessEvent(GameEventType eventType,
-            GameEvent<object> gameEvent) {
-            if (eventType == GameEventType.InputEvent) {
-                switch (gameEvent.Parameter1) {
-                case "KEY_PRESS":
-                    KeyPress(gameEvent.Message);
-                    break;
-                case "KEY_RELEASE":
-                    KeyRelease(gameEvent.Message);
-                    break;
-                }
-            }
-
-        }
+        
 
 
         public void InitializeGameState() {
