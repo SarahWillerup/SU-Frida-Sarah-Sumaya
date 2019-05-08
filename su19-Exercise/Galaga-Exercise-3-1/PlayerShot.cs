@@ -1,9 +1,9 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using Galaga_Exercise_3.GalagaStates;
+using Galaga_Exercise_3_1.GalagaStates;
 
-namespace Galaga_Exercise_3 {
+namespace Galaga_Exercise_3_1 {
     public class PlayerShot : Entity {
         private GameRunning gameRunning;
         public Shape shape;

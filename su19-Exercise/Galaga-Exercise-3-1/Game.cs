@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using DIKUArcade;
 using DIKUArcade.EventBus;
 using DIKUArcade.Timers;
-using Galaga_Exercise_3;
-using Galaga_Exercise_3.GalagaStates;
+using Galaga_Exercise_3_1;
+using Galaga_Exercise_3_1.GalagaStates;
 
 public class Game : IGameEventProcessor<object> {
     private Window win;
@@ -104,8 +104,3 @@ public class Game : IGameEventProcessor<object> {
     }
 
 }
-
-
- 
-    
-

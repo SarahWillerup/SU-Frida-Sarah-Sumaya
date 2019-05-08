@@ -8,9 +8,9 @@ using DIKUArcade.Math;
 using DIKUArcade.Physics;
 using DIKUArcade.State;
 using DIKUArcade.Timers;
-using Galaga_Exercise_3.GalagaEntities.Enemy;
-using Galaga_Exercise_3.MovementStrategy;
-using Galaga_Exercise_3.Squadrons;
+using Galaga_Exercise_3_1.GalagaEntities.Enemy;
+using Galaga_Exercise_3_1.MovementStrategy;
+using Galaga_Exercise_3_1.Squadrons;
 
 namespace Galaga_Exercise_3_1.GalagaStates {
     public class GameRunning : IGameState {

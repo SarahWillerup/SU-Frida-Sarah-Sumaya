@@ -3,7 +3,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using Galaga_Exercise_3.GalagaStates;
+using Galaga_Exercise_3_1.GalagaStates;
 
 namespace Galaga_Exercise_3_1 {
     public class Player : IGameEventProcessor<object> {
@@ -58,4 +58,3 @@ namespace Galaga_Exercise_3_1 {
         }
     }
 }
-
